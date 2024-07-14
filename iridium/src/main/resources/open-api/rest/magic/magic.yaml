@@ -1,0 +1,34 @@
+post:
+  tags:
+    - magic
+  description: add a new magic to the library
+  operationId: addMagic
+  requestBody:
+    description: magic model
+    content:
+      application/json:
+        schema:
+          $ref: 'model/Magic.yaml'
+    required: true
+  responses:
+    '201':
+      description: created
+      content:
+        application/json:
+          schema:
+            type: string
+            format: uuid
+get:
+  tags:
+    - magic
+  description: get all magic from the library
+  operationId: getAllMagic
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: 'model/MagicResponse.yaml'

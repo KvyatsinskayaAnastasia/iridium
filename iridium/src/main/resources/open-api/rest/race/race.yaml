@@ -1,0 +1,34 @@
+post:
+  tags:
+    - race
+  description: add a new race to the library
+  operationId: addRace
+  requestBody:
+    description: Create a new race
+    content:
+      application/json:
+        schema:
+          $ref: 'model/Race.yaml'
+    required: true
+  responses:
+    '201':
+      description: created
+      content:
+        application/json:
+          schema:
+            type: string
+            format: uuid
+get:
+  tags:
+    - race
+  description: get all races from the library
+  operationId: getAllRaces
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: 'model/Race.yaml'

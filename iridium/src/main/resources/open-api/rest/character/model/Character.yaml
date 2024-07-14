@@ -1,0 +1,58 @@
+type: object
+required:
+  - name
+  - age
+  - race
+  - gender
+  - appearance
+  - temper
+  - biography
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: Морес
+  age:
+    type: integer
+    example: 24
+  race:
+    $ref: '../../race/model/Race.yaml'
+  gender:
+    $ref: 'Gender.yaml'
+    example: MALE
+  appearance:
+    type: string
+    description: description of the character appearance, habits in gestures, facial expressions, unexpected signs
+    example: Светлые волосы, серые глаза, пепельные крылья
+  spells:
+    type: array
+    items:
+      $ref: '../../magic/model/Spell.yaml'
+    uniqueItems: true
+    description: the spells that the character knows how to use
+  abilities:
+    type: array
+    items:
+      $ref: 'CharacterAbility.yaml'
+    uniqueItems: true
+    description: the abilities that the character knows how to use
+  temper:
+    type: string
+    description: general personality traits for a character
+    example: уравновешенный снаружи, вечно недовольный внутри
+  biography:
+    type: string
+    description: short story of the character and his journeys
+    example: уравновешенный снаружи, вечно недовольный внутри
+  aim:
+    type: string
+    description: currents aim(s) for the character
+    example: наладить связь с русалками и драконами
+  nationality:
+    type: string
+    example: Пендрагон
+  image:
+    type: string
+    format: byte

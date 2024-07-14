@@ -1,0 +1,16 @@
+type: object
+required:
+  - id
+  - name
+  - description
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: Жаркое пламя
+  description:
+    type: string
+    maxLength: 500
+    example: из рук мага вырывает сгусток огня из которого можно создавать огненные шары. Урон 5.

@@ -1,0 +1,16 @@
+type: object
+required:
+  - description
+  - minLevel
+properties:
+  id:
+    type: string
+    format: uuid
+  description:
+    type: string
+    maxLength: 500
+    example: Персонаж знает ноты и с какой стороны держать инструмент.
+  minLevel:
+    type: integer
+    description: the level needed to reach this skill
+    example: 1

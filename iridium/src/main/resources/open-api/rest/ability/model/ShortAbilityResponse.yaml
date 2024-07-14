@@ -1,0 +1,20 @@
+type: object
+required:
+  - id
+  - name
+  - description
+  - abilityType
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: Скрытность
+  description:
+    type: string
+    maxLength: 500
+    example: Способность прятаться, бесшумно передвигаться и делать все, что хотелось бы утаить персонажу. Для того, чтобы использовать этот навык, в беседе боя вы кидаете команду !дайс+уровень скрытности.
+  abilityType:
+    $ref: 'AbilityType.yaml'
+    example: GENERAL

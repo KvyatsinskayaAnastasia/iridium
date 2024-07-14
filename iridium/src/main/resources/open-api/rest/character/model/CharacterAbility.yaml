@@ -1,0 +1,11 @@
+type: object
+required:
+  - ability
+  - level
+properties:
+  ability:
+    $ref: '../../ability/model/Ability.yaml'
+  level:
+    type: integer
+    description: current level of the ability
+    example: 3

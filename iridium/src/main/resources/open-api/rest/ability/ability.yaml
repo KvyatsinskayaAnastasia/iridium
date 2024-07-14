@@ -1,0 +1,40 @@
+post:
+  tags:
+    - ability
+  description: add a new ability to the library
+  operationId: addAbility
+  requestBody:
+    description: model of a new ability
+    content:
+      application/json:
+        schema:
+          $ref: 'model/Ability.yaml'
+    required: true
+  responses:
+    '201':
+      description: created
+      content:
+        application/json:
+          schema:
+            type: string
+            format: uuid
+get:
+  tags:
+    - ability
+  description: get all abilities from library (or filter them by type)
+  operationId: getAllAbilities
+  parameters:
+    - name: abilityType
+      in: query
+      description: type of the ability
+      schema:
+        $ref: 'model/AbilityType.yaml'
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: 'model/ShortAbilityResponse.yaml'

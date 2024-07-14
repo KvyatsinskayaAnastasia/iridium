@@ -1,0 +1,14 @@
+type: object
+requeired:
+  - name
+  - description
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: Нефелимы
+  description:
+    type: string
+    example: Нефилимы — далекие потомки богов, которые сошли с ума и после своего свержения исчезли с лица Иридиума
