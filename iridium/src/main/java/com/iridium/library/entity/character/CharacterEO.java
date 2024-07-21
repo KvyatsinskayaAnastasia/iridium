@@ -1,101 +1,60 @@
 package com.iridium.library.entity.character;
 
+import com.iridium.library.entity.AbstractEntityEO;
 import com.iridium.library.entity.power.SpellEO;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
+@Table(name = "character")
 @Getter
 @Setter
-public class CharacterEO {
-    /**
-     * Id.
-     */
-    @Id
-    @GeneratedValue
-    private UUID id;
+public class CharacterEO extends AbstractEntityEO {
 
-    /**
-     * Name.
-     */
     private String name;
 
-    /**
-     * Age.
-     */
     private int age;
 
-    /**
-     * Race, see {@link com.iridium.library.entity.character.RaceEO}.
-     */
     @ManyToOne
-    private RaceEO raceEO;
+    @JoinColumn(name = "race_id", nullable = false)
+    private RaceEO race;
 
-    /**
-     * Gender, see {@link com.iridium.library.entity.character.Gender}.
-     */
+    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private GenderEO gender;
 
-    /**
-     * Appearance.
-     */
     private String appearance;
 
-    /**
-     * Spells that character can use, see {@link com.iridium.library.entity.power.SpellEO}.
-     */
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
-            name = "character_spell",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "spell_id")
+        name = "character_spell",
+        joinColumns = @JoinColumn(name = "character_id"),
+        inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
     private Set<SpellEO> spells;
 
-    /**
-     * Abilities, that character can use, and theirs level.
-     * See {@link com.iridium.library.entity.character.CharacterAbilityEO}.
-     */
-    @OneToMany
-    private Set<CharacterAbilityEO> abilities;
+    @OneToMany(mappedBy = "character")
+    private Set<CharacterAbilityEO> characterAbilities;
 
-    /**
-     * Temper.
-     */
     private String temper;
 
-    /**
-     * Biography.
-     */
     private String biography;
 
-    /**
-     * Aim.
-     */
     private String aim;
 
-    /**
-     * Nationally.
-     */
     private String nationality;
 
-    /**
-     * Image of character.
-     */
     private byte[] image;
 }

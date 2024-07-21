@@ -10,8 +10,5 @@ public final class ValidationConstants {
 
     }
 
-    /**
-     * Max length of description field.
-     */
     public static final int DESCRIPTION_LENGTH = 500;
 }

@@ -19,13 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BaseCharacterService implements CharacterService {
 
-    /**
-     * See the {@link com.iridium.library.repository.character.CharacterRepository}.
-     */
     private final CharacterRepository characterRepository;
-    /**
-     * See the {@link com.iridium.library.mapper.character.CharacterMapper}.
-     */
     private final CharacterMapper characterMapper;
 
     @Override

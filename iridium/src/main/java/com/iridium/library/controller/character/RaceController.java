@@ -15,9 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RaceController implements RaceApi {
 
-    /**
-     * See {@link com.iridium.library.service.character.RaceService}.
-     */
     private final BaseRaceService raceService;
 
     @Override

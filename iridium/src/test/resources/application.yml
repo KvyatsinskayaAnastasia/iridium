@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/iridium
+    username: postgres
+    password: 123
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+
+logging:
+  level:
+    org.hibernate: DEBUG
+    org.springframework: DEBUG

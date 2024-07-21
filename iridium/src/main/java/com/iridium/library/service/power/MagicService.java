@@ -8,9 +8,7 @@ import java.util.UUID;
 
 /**
  * Service to work with magic model.
- *
  * @author Kviatsinskaya Anastasia
- *
  */
 public interface MagicService {
     /**

@@ -15,9 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CharacterController implements CharacterApi {
 
-    /**
-     * See {@link com.iridium.library.service.character.CharacterService}.
-     */
     private final BaseCharacterService characterService;
 
     @Override

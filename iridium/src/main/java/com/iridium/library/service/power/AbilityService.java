@@ -2,6 +2,7 @@ package com.iridium.library.service.power;
 
 import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.AbilityType;
+import com.iridium.openapi.model.AddAbility;
 import com.iridium.openapi.model.ShortAbilityResponse;
 
 import java.util.List;
@@ -9,9 +10,7 @@ import java.util.UUID;
 
 /**
  * Service to work with ability model.
- *
  * @author Kviatsinskaya Anastasia
- *
  */
 public interface AbilityService {
     /**
@@ -19,7 +18,7 @@ public interface AbilityService {
      * @param ability the model of a new ability
      * @return the id of created ability
      */
-    UUID saveAbility(Ability ability);
+    UUID saveAbility(AddAbility ability);
 
     /**
      * Get all abilities from db.
@@ -40,4 +39,10 @@ public interface AbilityService {
      * @return the list of short ability responses filtered by type
      */
     List<ShortAbilityResponse> getAllAbilitiesByType(AbilityType type);
+
+    /**
+     * Save ability in db.
+     * @param uuid id of ability to delete
+     */
+    void deleteAbility(UUID uuid);
 }

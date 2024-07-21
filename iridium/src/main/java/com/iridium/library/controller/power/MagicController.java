@@ -16,9 +16,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MagicController implements MagicApi {
 
-    /**
-     * See {@link com.iridium.library.service.power.MagicService}.
-     */
     private final BaseMagicService magicService;
 
     @Override

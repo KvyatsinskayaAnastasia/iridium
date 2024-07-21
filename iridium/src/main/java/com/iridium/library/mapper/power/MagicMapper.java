@@ -5,9 +5,9 @@ import com.iridium.library.entity.power.SpellEO;
 import com.iridium.openapi.model.LeveledSpells;
 import com.iridium.openapi.model.Magic;
 import com.iridium.openapi.model.MagicResponse;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -15,14 +15,11 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Mapper(componentModel = "spring")
 public abstract class MagicMapper {
 
-    /**
-     * See the {@link com.iridium.library.mapper.power.SpellMapper}.
-     */
-    private final SpellMapper spellMapper;
+    @Autowired
+    private SpellMapper spellMapper;
 
     /**
      * Map list of magic entities to list of magic responses.
@@ -36,7 +33,7 @@ public abstract class MagicMapper {
      * @param magic magic model
      * @return magic entity
      */
-    @Mapping(target = "spellEOS", ignore = true)
+    @Mapping(target = "spells", ignore = true)
     public abstract MagicEO toMagicEO(Magic magic);
 
     /**
@@ -56,7 +53,7 @@ public abstract class MagicMapper {
         magicResponse.setDescription(magicEO.getDescription());
 
         final Map<Integer, Set<SpellEO>> leveledSpells = magicEO
-            .getSpellEOS()
+            .getSpells()
             .stream()
             .collect(Collectors.groupingBy(SpellEO::getLevel,
                 Collectors.mapping(Function.identity(), Collectors.toSet())));

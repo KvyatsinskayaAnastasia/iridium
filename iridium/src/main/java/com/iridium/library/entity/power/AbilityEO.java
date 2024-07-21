@@ -1,55 +1,35 @@
 package com.iridium.library.entity.power;
 
+import com.iridium.library.entity.AbstractEntityEO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
-import java.util.UUID;
 
 import static com.iridium.library.entity.ValidationConstants.DESCRIPTION_LENGTH;
 
 @Entity
+@Table(name = "ability")
 @Getter
 @Setter
-public class AbilityEO {
-    /**
-     * Id.
-     */
-    @Id
-    @GeneratedValue
-    private UUID id;
+public class AbilityEO extends AbstractEntityEO {
 
-    /**
-     * Name.
-     */
     private String name;
 
-    /**
-     * Description.
-     */
     @Column(length = DESCRIPTION_LENGTH)
     private String description;
 
-    /**
-     * Ability type see the {@link com.iridium.library.entity.power.AbilityTypeEO}.
-     *
-     */
+    @Column(name = "ability_type")
     @Enumerated(EnumType.STRING)
-    private AbilityTypeEO abilityTypeEO;
+    private AbilityTypeEO abilityType;
 
-    /**
-     * Skills, that ability provide ordered by min level to learn them.
-     */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("MIN_LEVEL ASC")
-    private Set<SkillEO> skillEOS;
+    @OneToMany(mappedBy = "ability", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SkillEO> skills;
 }

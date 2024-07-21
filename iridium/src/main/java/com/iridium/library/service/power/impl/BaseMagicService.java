@@ -22,13 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BaseMagicService implements MagicService {
 
-    /**
-     * See the {@link com.iridium.library.repository.power.MagicRepository}.
-     */
     private final MagicRepository magicRepository;
-    /**
-     * See the {@link com.iridium.library.mapper.power.MagicMapper}.
-     */
     private final MagicMapper magicMapper;
 
     @Override

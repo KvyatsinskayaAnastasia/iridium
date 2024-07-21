@@ -19,13 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BaseRaceService implements RaceService {
 
-    /**
-     * See the {@link com.iridium.library.repository.character.RaceRepository}.
-     */
     private final RaceRepository raceRepository;
-    /**
-     * See the {@link com.iridium.library.mapper.character.RaceMapper}.
-     */
     private final RaceMapper raceMapper;
 
     @Override

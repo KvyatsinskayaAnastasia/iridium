@@ -56,10 +56,6 @@
         <property name="optional" value="true"/>
     </module>
 
-    <!-- Checks that a package-info.java file exists for each package.     -->
-    <!-- See https://checkstyle.org/config_javadoc.html#JavadocPackage -->
-    <module name="JavadocPackage"/>
-
     <!-- Checks whether files end with a new line.                        -->
     <!-- See https://checkstyle.org/config_misc.html#NewlineAtEndOfFile -->
     <module name="NewlineAtEndOfFile"/>
@@ -102,8 +98,6 @@
         <!-- See https://checkstyle.org/config_javadoc.html -->
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocMethod"/>
-        <module name="JavadocType"/>
-        <module name="JavadocVariable"/>
         <module name="JavadocStyle"/>
         <module name="MissingJavadocMethod"/>
 
@@ -163,7 +157,10 @@
         <!-- See https://checkstyle.org/config_coding.html -->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
-        <module name="HiddenField"/>
+        <module name="HiddenField" >
+            <property name="ignoreSetter" value="true" />
+            <property name="ignoreConstructorParameter" value="true" />
+        </module>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber"/>

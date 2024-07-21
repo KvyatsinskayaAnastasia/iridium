@@ -7,9 +7,7 @@ import java.util.UUID;
 
 /**
  * Service to work with character model.
- *
  * @author Kviatsinskaya Anastasia
- *
  */
 public interface RaceService {
     /**
