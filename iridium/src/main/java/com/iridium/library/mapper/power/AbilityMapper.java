@@ -4,7 +4,7 @@ import com.iridium.library.entity.power.AbilityEO;
 import com.iridium.library.entity.power.AbilityTypeEO;
 import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.AbilityType;
-import com.iridium.openapi.model.AddAbility;
+import com.iridium.openapi.model.AddAbilityRequest;
 import com.iridium.openapi.model.ShortAbilityResponse;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -38,7 +38,7 @@ public abstract class AbilityMapper {
      * @return ability entity
      */
     @Mapping(target = "id", ignore = true)
-    public abstract AbilityEO toAbilityEO(AddAbility ability);
+    public abstract AbilityEO toAbilityEO(AddAbilityRequest ability);
 
     /**
      * Map list of ability entities to list of short ability responses.

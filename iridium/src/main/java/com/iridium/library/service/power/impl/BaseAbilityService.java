@@ -5,7 +5,7 @@ import com.iridium.library.repository.power.AbilityRepository;
 import com.iridium.library.service.power.AbilityService;
 import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.AbilityType;
-import com.iridium.openapi.model.AddAbility;
+import com.iridium.openapi.model.AddAbilityRequest;
 import com.iridium.openapi.model.ShortAbilityResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class BaseAbilityService implements AbilityService {
     private final AbilityMapper abilityMapper;
 
     @Override
-    public final UUID saveAbility(final AddAbility ability) {
-        return abilityRepository.save(abilityMapper.toAbilityEO(ability)).getId();
+    public final UUID saveAbility(final AddAbilityRequest addAbilityRequest) {
+        return abilityRepository.save(abilityMapper.toAbilityEO(addAbilityRequest)).getId();
     }
 
     @Override

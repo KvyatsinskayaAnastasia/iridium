@@ -1,0 +1,18 @@
+type: object
+required:
+  - name
+  - description
+  - spells
+properties:
+  name:
+    type: string
+    example: Огонь
+  description:
+    type: string
+    maxLength: 500
+    example: Огненные маги способны взаимодействовать со стихией огня и устойчивы к жаркому климату благодаря своей особенности договариваться с пламенем. Огонь для такого мага — самый лучший друг и часть их сущности. Нередко они перенимают черты пламени, становясь пылкими, неудержимыми и «горячими».
+  spells:
+    type: array
+    items:
+      $ref: 'AddSpellRequest.yaml'
+    uniqueItems: true

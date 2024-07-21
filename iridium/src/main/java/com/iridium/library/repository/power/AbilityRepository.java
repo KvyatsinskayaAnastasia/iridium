@@ -19,6 +19,10 @@ import java.util.UUID;
  */
 @Repository
 public interface AbilityRepository extends BaseRepository<AbilityEO, UUID> {
+
+    String SKILLS = "skills";
+    String ID = "id";
+
     /**
      * Find abilities from db by ability type.
      *
@@ -37,8 +41,8 @@ public interface AbilityRepository extends BaseRepository<AbilityEO, UUID> {
         final CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<AbilityEO> criteriaQuery = criteriaBuilder.createQuery(AbilityEO.class);
         final Root<AbilityEO> root = criteriaQuery.from(AbilityEO.class);
-        root.fetch("skills");
-        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), abilityId));
+        root.fetch(SKILLS);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(ID), abilityId));
         return Optional.ofNullable(getEntityManager().createQuery(criteriaQuery).getSingleResult());
     }
 }

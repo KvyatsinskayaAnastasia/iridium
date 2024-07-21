@@ -1,13 +1,9 @@
 package com.iridium.library.service.power;
 
-import com.iridium.library.entity.power.AbilityEO;
 import com.iridium.library.entity.power.SkillEO;
 import com.iridium.library.repository.power.AbilityRepository;
 import com.iridium.library.repository.power.SkillRepository;
-import com.iridium.openapi.model.Ability;
-import com.iridium.openapi.model.AbilityType;
-import com.iridium.openapi.model.AddAbility;
-import com.iridium.openapi.model.Skill;
+import com.iridium.openapi.model.AddAbilityRequest;
 import org.instancio.Instancio;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -39,17 +31,17 @@ public class AbilityServiceTest {
     @Test
     @DisplayName("test ability save, get and delete")
     public void testSuccessCreateGetDeleteAbility() {
-        final var addAbility = Instancio.of(AddAbility.class).create();
-        final var abilityId = abilityService.saveAbility(addAbility);
+        final var addAbilityRequest = Instancio.of(AddAbilityRequest.class).create();
+        final var abilityId = abilityService.saveAbility(addAbilityRequest);
         final var abilityEO = abilityRepository.findByIdWithSkills(abilityId).orElse(null);
         assertNotNull(abilityEO);
-        assertEquals(addAbility.getAbilityType().toString(), abilityEO.getAbilityType().toString());
-        assertEquals(addAbility.getDescription(), abilityEO.getDescription());
-        assertEquals(addAbility.getName(), abilityEO.getName());
-        assertEquals(addAbility.getSkills().size(), abilityEO.getSkills().size());
+        assertEquals(addAbilityRequest.getAbilityType().toString(), abilityEO.getAbilityType().toString());
+        assertEquals(addAbilityRequest.getDescription(), abilityEO.getDescription());
+        assertEquals(addAbilityRequest.getName(), abilityEO.getName());
+        assertEquals(addAbilityRequest.getSkills().size(), abilityEO.getSkills().size());
 
         final var ability = abilityService.getAbilityById(abilityId);
-        assertNotNull(abilityEO);
+        assertNotNull(ability);
         assertEquals(ability.getAbilityType().toString(), abilityEO.getAbilityType().toString());
         assertEquals(ability.getDescription(), abilityEO.getDescription());
         assertEquals(ability.getName(), abilityEO.getName());

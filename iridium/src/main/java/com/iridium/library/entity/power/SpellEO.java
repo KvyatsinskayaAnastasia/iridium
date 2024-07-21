@@ -4,6 +4,7 @@ import com.iridium.library.entity.AbstractEntityEO;
 import com.iridium.library.entity.character.CharacterEO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -41,7 +42,7 @@ public class SpellEO extends AbstractEntityEO {
     @ManyToMany(mappedBy = "spells")
     private Set<CharacterEO> characters;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "magic_id")
     private MagicEO magic;
 }

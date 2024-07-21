@@ -8,7 +8,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: 'model/AddAbility.yaml'
+          $ref: 'model/AddAbilityRequest.yaml'
     required: true
   responses:
     '201':

@@ -8,19 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Repository interface for ability entity.
+ * Repository interface for skill entity.
  *
  * @author Kviatsinskaya Anastasia
  */
 @Repository
 public interface SkillRepository extends JpaRepository<SkillEO, UUID> {
-    /**
-     * Find skills from db by ability that provide them.
-     *
-     * @param abilityId the ability id for the search
-     * @return the skills entities by received ability id
-     */
-    List<SkillEO> findByAbilityId(UUID abilityId);
 
     /**
      * Find skills from db by skill ids.

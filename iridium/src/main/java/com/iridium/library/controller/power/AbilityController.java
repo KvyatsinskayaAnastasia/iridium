@@ -4,7 +4,7 @@ import com.iridium.library.service.power.impl.BaseAbilityService;
 import com.iridium.openapi.api.AbilityApi;
 import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.AbilityType;
-import com.iridium.openapi.model.AddAbility;
+import com.iridium.openapi.model.AddAbilityRequest;
 import com.iridium.openapi.model.ShortAbilityResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ public class AbilityController implements AbilityApi {
     private final BaseAbilityService abilityService;
 
     @Override
-    public final ResponseEntity<UUID> addAbility(final AddAbility ability) {
-        return ResponseEntity.ok(abilityService.saveAbility(ability));
+    public final ResponseEntity<UUID> addAbility(final AddAbilityRequest addAbilityRequest) {
+        return ResponseEntity.ok(abilityService.saveAbility(addAbilityRequest));
         //todo: check info about http statuses (created at first)
     }
 

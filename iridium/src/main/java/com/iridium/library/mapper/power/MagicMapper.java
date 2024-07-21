@@ -2,11 +2,13 @@ package com.iridium.library.mapper.power;
 
 import com.iridium.library.entity.power.MagicEO;
 import com.iridium.library.entity.power.SpellEO;
+import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.LeveledSpells;
-import com.iridium.openapi.model.Magic;
 import com.iridium.openapi.model.MagicResponse;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public abstract class MagicMapper {
 
     /**
      * Map list of magic entities to list of magic responses.
+     *
      * @param magicEOList list of magic entities
      * @return list of magic responses
      */
@@ -30,14 +33,16 @@ public abstract class MagicMapper {
 
     /**
      * Map magic model to magic entity.
-     * @param magic magic model
+     *
+     * @param addMagicRequest magic model to add
      * @return magic entity
      */
-    @Mapping(target = "spells", ignore = true)
-    public abstract MagicEO toMagicEO(Magic magic);
+    @Mapping(target = "id", ignore = true)
+    public abstract MagicEO toMagicEO(AddMagicRequest addMagicRequest);
 
     /**
      * Map magic entity to magic response.
+     *
      * @param magicEO magic entity
      * @return magic response
      */
@@ -65,5 +70,15 @@ public abstract class MagicMapper {
             .collect(Collectors.toSet()));
 
         return magicResponse;
+    }
+
+    /**
+     * Add magic id for spellEO after magicEO mapping.
+     *
+     * @param magic magic type model
+     */
+    @AfterMapping
+    protected void addMagicToSpells(@MappingTarget final MagicEO magic) {
+        magic.getSpells().forEach(spellEO -> spellEO.setMagic(magic));
     }
 }

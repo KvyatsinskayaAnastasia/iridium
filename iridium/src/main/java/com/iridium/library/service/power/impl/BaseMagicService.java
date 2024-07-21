@@ -4,7 +4,7 @@ import com.iridium.library.entity.power.MagicEO;
 import com.iridium.library.mapper.power.MagicMapper;
 import com.iridium.library.repository.power.MagicRepository;
 import com.iridium.library.service.power.MagicService;
-import com.iridium.openapi.model.Magic;
+import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.MagicResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,7 @@ import java.util.UUID;
 /**
  * Base service to work with magic model.
  * See the {@link com.iridium.library.service.power.MagicService}.
+ *
  * @author Kviatsinskaya Anastasia
  */
 @Service
@@ -26,8 +27,8 @@ public class BaseMagicService implements MagicService {
     private final MagicMapper magicMapper;
 
     @Override
-    public final UUID saveMagic(final Magic magic) {
-        return magicRepository.save(magicMapper.toMagicEO(magic)).getId();
+    public final UUID saveMagic(final AddMagicRequest addMagicRequest) {
+        return magicRepository.save(magicMapper.toMagicEO(addMagicRequest)).getId();
     }
 
     @Override
@@ -37,7 +38,12 @@ public class BaseMagicService implements MagicService {
 
     @Override
     public final MagicResponse getMagicById(final UUID id) {
-        final Optional<MagicEO> magicOptional = magicRepository.findById(id);
+        final Optional<MagicEO> magicOptional = magicRepository.findByIdWithSpells(id);
         return magicOptional.map(magicMapper::toMagicResponse).orElse(null);
+    }
+
+    @Override
+    public final void deleteMagic(final UUID uuid) {
+        magicRepository.deleteById(uuid);
     }
 }

@@ -17,6 +17,6 @@ properties:
   skills:
     type: array
     items:
-      $ref: 'AddSkill.yaml'
+      $ref: 'AddSkillRequest.yaml'
     uniqueItems: true
     description: contain the skills, that this ability can give
