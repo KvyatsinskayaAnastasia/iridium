@@ -5,6 +5,7 @@ import com.iridium.library.entity.power.AbilityTypeEO;
 import com.iridium.library.repository.BaseRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
@@ -41,7 +42,7 @@ public interface AbilityRepository extends BaseRepository<AbilityEO, UUID> {
         final CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<AbilityEO> criteriaQuery = criteriaBuilder.createQuery(AbilityEO.class);
         final Root<AbilityEO> root = criteriaQuery.from(AbilityEO.class);
-        root.fetch(SKILLS);
+        root.fetch(SKILLS, JoinType.LEFT);
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(ID), abilityId));
         return Optional.ofNullable(getEntityManager().createQuery(criteriaQuery).getSingleResult());
     }

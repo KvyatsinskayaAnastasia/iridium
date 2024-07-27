@@ -11,11 +11,15 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 @Mapper(componentModel = "spring")
 public abstract class MagicMapper {
@@ -61,13 +65,17 @@ public abstract class MagicMapper {
             .getSpells()
             .stream()
             .collect(Collectors.groupingBy(SpellEO::getLevel,
-                Collectors.mapping(Function.identity(), Collectors.toSet())));
+                Collectors.mapping(Function.identity(), Collectors.toSet())))
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByKey())
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
 
         magicResponse.setLeveledSpells(leveledSpells.entrySet().stream().map(leveledSpell ->
             new LeveledSpells()
                 .level(leveledSpell.getKey())
                 .spells(spellMapper.toSpellResponseSet(leveledSpell.getValue())))
-            .collect(Collectors.toSet()));
+            .collect(Collectors.toCollection(LinkedHashSet::new)));
 
         return magicResponse;
     }

@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: Iridium - OpenAPI 3.0
+  description: Iridium API Spec
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /character:
+    $ref: 'rest/character/character.yml'
+  /character/{id}:
+    $ref: 'rest/character/get-character.yml'
+
+  /ability:
+    $ref: 'rest/ability/ability.yml'
+  /ability/{id}:
+    $ref: 'rest/ability/get-ability.yml'
+
+  /magic:
+    $ref: 'rest/magic/magic.yml'
+  /magic/{id}:
+    $ref: 'rest/magic/get-magic.yml'
+
+  /race:
+    $ref: 'rest/race/race.yml'
+  /race/{id}:
+    $ref: 'rest/race/get-race.yml'

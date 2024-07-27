@@ -6,12 +6,16 @@ import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.AbilityType;
 import com.iridium.openapi.model.AddAbilityRequest;
 import com.iridium.openapi.model.ShortAbilityResponse;
+import com.iridium.openapi.model.Skill;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class AbilityMapper {
@@ -64,5 +68,18 @@ public abstract class AbilityMapper {
     @AfterMapping
     protected void addAbilityToSkills(@MappingTarget final AbilityEO ability) {
         ability.getSkills().forEach(skillEO -> skillEO.setAbility(ability));
+    }
+
+    /**
+     * Sort skills after ability mapping.
+     *
+     * @param ability ability type model
+     */
+    @AfterMapping
+    protected void sortSkills(@MappingTarget final Ability ability) {
+        ability.setSkills(
+            ability.getSkills().stream().sorted(Comparator.comparingInt(Skill::getMinLevel))
+                .collect(Collectors.toCollection(LinkedHashSet::new))
+        );
     }
 }
