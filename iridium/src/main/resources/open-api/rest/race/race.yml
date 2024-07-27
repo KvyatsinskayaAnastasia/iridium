@@ -8,7 +8,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: 'model/Race.yaml'
+          $ref: 'model/RaceRequest.yaml'
     required: true
   responses:
     '201':

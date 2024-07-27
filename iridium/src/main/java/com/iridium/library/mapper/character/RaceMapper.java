@@ -2,7 +2,9 @@ package com.iridium.library.mapper.character;
 
 import com.iridium.library.entity.character.RaceEO;
 import com.iridium.openapi.model.Race;
+import com.iridium.openapi.model.RaceRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -17,10 +19,11 @@ public interface RaceMapper {
 
     /**
      * Map race model to race entity.
-     * @param race race model
+     * @param race race request model
      * @return race entity
      */
-    RaceEO toRaceEO(Race race);
+    @Mapping(target = "id", ignore = true)
+    RaceEO toRaceEO(RaceRequest race);
 
     /**
      * Map list of race entities to list of race models.

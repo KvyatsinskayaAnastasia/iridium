@@ -3,6 +3,7 @@ package com.iridium.library.controller.character;
 import com.iridium.library.service.character.impl.BaseRaceService;
 import com.iridium.openapi.api.RaceApi;
 import com.iridium.openapi.model.Race;
+import com.iridium.openapi.model.RaceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class RaceController implements RaceApi {
     private final BaseRaceService raceService;
 
     @Override
-    public final ResponseEntity<UUID> addRace(final Race race) {
+    public final ResponseEntity<UUID> addRace(final RaceRequest race) {
         return ResponseEntity.status(HttpStatus.CREATED).body(raceService.saveRace(race));
     }
 

@@ -1,6 +1,7 @@
 package com.iridium.library.service.character;
 
 import com.iridium.openapi.model.Race;
+import com.iridium.openapi.model.RaceRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public interface RaceService {
      * @param race the model of a new race
      * @return the id of created race
      */
-    UUID saveRace(Race race);
+    UUID saveRace(RaceRequest race);
 
     /**
      * Get all races from db.
@@ -29,4 +30,11 @@ public interface RaceService {
      * @return the race response by received id
      */
     Race getRaceById(UUID id);
+
+    /**
+     * Delete race by id from db.
+     *
+     * @param uuid id of race to delete
+     */
+    void deleteRace(UUID uuid);
 }

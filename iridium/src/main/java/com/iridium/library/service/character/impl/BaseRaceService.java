@@ -4,6 +4,7 @@ import com.iridium.library.mapper.character.RaceMapper;
 import com.iridium.library.repository.character.RaceRepository;
 import com.iridium.library.service.character.RaceService;
 import com.iridium.openapi.model.Race;
+import com.iridium.openapi.model.RaceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class BaseRaceService implements RaceService {
     private final RaceMapper raceMapper;
 
     @Override
-    public final UUID saveRace(final Race race) {
+    public final UUID saveRace(final RaceRequest race) {
         return raceRepository.save(raceMapper.toRaceEO(race)).getId();
     }
 
@@ -35,5 +36,10 @@ public class BaseRaceService implements RaceService {
     @Override
     public final Race getRaceById(final UUID id) {
         return raceMapper.toRace(raceRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public final void deleteRace(final UUID uuid) {
+        raceRepository.deleteById(uuid);
     }
 }
