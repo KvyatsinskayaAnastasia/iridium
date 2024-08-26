@@ -1,6 +1,6 @@
 package com.iridium.library.entity.character;
 
-import com.iridium.library.entity.AbstractEntityEO;
+import com.iridium.common.entity.AbstractEntityEO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;

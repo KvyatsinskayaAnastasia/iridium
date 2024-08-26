@@ -1,7 +1,7 @@
 package com.iridium.library.repository.power;
 
 import com.iridium.library.entity.power.SpellEO;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.iridium.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.UUID;
  * @author Kviatsinskaya Anastasia
  */
 @Repository
-public interface SpellRepository extends JpaRepository<SpellEO, UUID> {
+public interface SpellRepository extends BaseRepository<SpellEO, UUID> {
 
     /**
      * Find spells from db by spell ids.

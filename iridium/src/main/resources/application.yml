@@ -10,6 +10,10 @@ spring:
     enabled: true
     baselineOnMigrate: true
 
+security:
+  jwt:
+    secret-key: 116e50262393df1679aa157ea553b57a2cf25ae8c9f919137a7cde370599be51
+    expiration-time: 3600000
 #logging:
 #  level:
 #    org.hibernate: DEBUG

@@ -1,0 +1,18 @@
+type: object
+requeired:
+  - id
+  - name
+  - roles
+properties:
+  id:
+    type: string
+    format: uuid
+  username:
+    type: string
+    example: BlueDragon
+  roles:
+    type: array
+    items:
+      $ref: 'Role.yaml'
+    uniqueItems: true
+    description: contain the roles of user

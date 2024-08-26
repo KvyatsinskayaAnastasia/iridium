@@ -2,7 +2,7 @@ package com.iridium.library.repository.power;
 
 import com.iridium.library.entity.power.AbilityEO;
 import com.iridium.library.entity.power.AbilityTypeEO;
-import com.iridium.library.repository.BaseRepository;
+import com.iridium.common.repository.BaseRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.JoinType;

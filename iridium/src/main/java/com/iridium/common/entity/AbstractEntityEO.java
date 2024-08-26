@@ -1,4 +1,4 @@
-package com.iridium.library.entity;
+package com.iridium.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.iridium.library.repository;
+package com.iridium.common.repository;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;

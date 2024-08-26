@@ -1,6 +1,6 @@
 package com.iridium.library.entity.power;
 
-import com.iridium.library.entity.AbstractEntityEO;
+import com.iridium.common.entity.AbstractEntityEO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

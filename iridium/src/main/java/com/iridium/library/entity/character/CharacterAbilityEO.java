@@ -1,6 +1,6 @@
 package com.iridium.library.entity.character;
 
-import com.iridium.library.entity.AbstractEntityEO;
+import com.iridium.common.entity.AbstractEntityEO;
 import com.iridium.library.entity.power.AbilityEO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

@@ -25,3 +25,8 @@ paths:
     $ref: 'rest/race/race.yml'
   /race/{id}:
     $ref: 'rest/race/get-race.yml'
+
+  /authorization/login:
+    $ref: 'rest/user/login.yml'
+  /authorization/register:
+    $ref: 'rest/user/register.yml'

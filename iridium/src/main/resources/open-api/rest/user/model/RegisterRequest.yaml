@@ -1,0 +1,11 @@
+type: object
+requeired:
+  - name
+  - password
+properties:
+  username:
+    type: string
+    example: BlueDragon
+  password:
+    type: string
+    example: test_for_test

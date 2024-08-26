@@ -1,6 +1,6 @@
 package com.iridium.configuration;
 
-import com.iridium.library.repository.BaseRepositoryImpl;
+import com.iridium.common.repository.BaseRepositoryImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

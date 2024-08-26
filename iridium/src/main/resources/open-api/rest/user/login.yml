@@ -1,0 +1,19 @@
+post:
+  tags:
+    - authorization
+  description: login user
+  operationId: login
+  requestBody:
+    description: user data to login
+    content:
+      application/json:
+        schema:
+          $ref: 'model/LoginRequest.yaml'
+    required: true
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: 'model/LoginResponse.yaml'
