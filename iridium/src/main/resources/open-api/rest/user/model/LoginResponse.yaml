@@ -1,9 +1,6 @@
 type: object
 requeired:
-  - user
   - token
 properties:
   token:
     type: string
-  user:
-    $ref: 'User.yaml'

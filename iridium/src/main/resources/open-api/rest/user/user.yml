@@ -1,0 +1,12 @@
+get:
+  tags:
+    - authorization
+  description: get authorized user
+  operationId: currentUser
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: 'model/User.yaml'

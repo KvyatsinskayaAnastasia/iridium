@@ -3,6 +3,7 @@ package com.iridium.security.service.user;
 import com.iridium.openapi.model.LoginRequest;
 import com.iridium.openapi.model.LoginResponse;
 import com.iridium.openapi.model.RegisterRequest;
+import com.iridium.openapi.model.User;
 
 public interface AuthorizationService {
     /**
@@ -18,4 +19,10 @@ public interface AuthorizationService {
      * @return jwt token
      */
     String register(RegisterRequest registerRequest);
+
+    /**
+     * Get authorized user.
+     * @return user model
+     */
+    User currentUser();
 }

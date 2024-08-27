@@ -30,3 +30,5 @@ paths:
     $ref: 'rest/user/login.yml'
   /authorization/register:
     $ref: 'rest/user/register.yml'
+  /authorization/user:
+    $ref: 'rest/user/user.yml'

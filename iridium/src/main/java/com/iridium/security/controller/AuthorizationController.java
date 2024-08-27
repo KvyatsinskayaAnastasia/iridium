@@ -2,6 +2,7 @@ package com.iridium.security.controller;
 
 import com.iridium.openapi.model.LoginResponse;
 import com.iridium.openapi.model.RegisterRequest;
+import com.iridium.openapi.model.User;
 import com.iridium.security.service.user.AuthorizationService;
 import com.iridium.openapi.api.AuthorizationApi;
 import com.iridium.openapi.model.LoginRequest;
@@ -23,5 +24,10 @@ public class AuthorizationController implements AuthorizationApi {
     @Override
     public final ResponseEntity<String> register(final RegisterRequest registerRequest) {
         return ResponseEntity.ok(authorizationService.register(registerRequest));
+    }
+
+    @Override
+    public final ResponseEntity<User> currentUser() {
+        return ResponseEntity.ok(authorizationService.currentUser());
     }
 }

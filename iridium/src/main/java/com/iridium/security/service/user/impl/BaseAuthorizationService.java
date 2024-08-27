@@ -3,12 +3,15 @@ package com.iridium.security.service.user.impl;
 import com.iridium.openapi.model.LoginRequest;
 import com.iridium.openapi.model.LoginResponse;
 import com.iridium.openapi.model.RegisterRequest;
+import com.iridium.openapi.model.User;
 import com.iridium.security.service.JwtService;
 import com.iridium.security.service.user.AuthorizationService;
 import com.iridium.security.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +31,7 @@ public class BaseAuthorizationService implements AuthorizationService {
             loginRequest.getPassword()
         ));
         final var token = jwtService.generateToken(userService.loadUserByUsername(loginRequest.getUsername()));
-        return new LoginResponse().token(token).user(userService.findUserByUsername(loginRequest.getUsername()));
+        return new LoginResponse().token(token);
     }
 
     @Override
@@ -37,5 +40,14 @@ public class BaseAuthorizationService implements AuthorizationService {
         return jwtService.generateToken(
             userService.saveUser(registerRequest)
         );
+    }
+
+    @Override
+    public final User currentUser() {
+        if (null != SecurityContextHolder.getContext()
+            && SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails user) {
+            return userService.findUserByUsername(user.getUsername());
+        }
+        return null;
     }
 }

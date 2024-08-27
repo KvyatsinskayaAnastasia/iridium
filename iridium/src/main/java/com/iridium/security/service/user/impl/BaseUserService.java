@@ -51,7 +51,8 @@ public class BaseUserService implements UserService {
     public final UserDetails saveUser(final RegisterRequest registerRequest) {
         final var userEO = userRepository.findByUsername(registerRequest.getUsername()).orElse(null);
         if (null != userEO) {
-            throw new RuntimeException("Такой пользователь уже есть в системе!"); //todo: add exceptions and error responses
+            throw new RuntimeException("Такой пользователь уже есть в системе!");
+            //todo: add exceptions and error responses
         }
         final var roleEO = roleRepository.findByName(RoleNameEO.ROLE_USER);
         final var newUserEO = userMapper.toUserEO(registerRequest);
