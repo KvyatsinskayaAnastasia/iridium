@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -46,4 +47,12 @@ public interface AbilityRepository extends BaseRepository<AbilityEO, UUID> {
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(ID), abilityId));
         return Optional.ofNullable(getEntityManager().createQuery(criteriaQuery).getSingleResult());
     }
+
+    /**
+     * Find ability from db by ability ids.
+     *
+     * @param abilityIds the ability ids
+     * @return the ability entities
+     */
+    Set<AbilityEO> findByIdIn(Set<UUID> abilityIds);
 }

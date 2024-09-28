@@ -17,4 +17,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'model/Race.yaml'
+            $ref: 'model/RaceResponse.yaml'

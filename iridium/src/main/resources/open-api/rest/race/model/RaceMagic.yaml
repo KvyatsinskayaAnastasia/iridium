@@ -1,0 +1,11 @@
+type: object
+requeired:
+  - id
+  - name
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: Школа огня

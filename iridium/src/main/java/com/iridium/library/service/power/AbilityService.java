@@ -1,11 +1,13 @@
 package com.iridium.library.service.power;
 
+import com.iridium.library.entity.power.AbilityEO;
 import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.AbilityType;
 import com.iridium.openapi.model.AddAbilityRequest;
 import com.iridium.openapi.model.ShortAbilityResponse;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -51,4 +53,12 @@ public interface AbilityService {
      * @param uuid id of ability to delete
      */
     void deleteAbility(UUID uuid);
+
+    /**
+     * Get all ability by ids.
+     *
+     * @param abilityIds ability ids
+     * @return ability entities
+     */
+    Set<AbilityEO> getAllAbilityEntitiesByIds(Set<UUID> abilityIds);
 }

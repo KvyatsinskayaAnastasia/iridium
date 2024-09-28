@@ -1,12 +1,13 @@
 package com.iridium.library.repository.power;
 
-import com.iridium.library.entity.power.MagicEO;
 import com.iridium.common.repository.BaseRepository;
+import com.iridium.library.entity.power.MagicEO;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -33,4 +34,12 @@ public interface MagicRepository extends BaseRepository<MagicEO, UUID> {
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(ID), magicId));
         return Optional.ofNullable(getEntityManager().createQuery(criteriaQuery).getSingleResult());
     }
+
+    /**
+     * Find magic from db by magic ids.
+     *
+     * @param magicIds the magic ids
+     * @return the magic entities
+     */
+    Set<MagicEO> findByIdIn(Set<UUID> magicIds);
 }

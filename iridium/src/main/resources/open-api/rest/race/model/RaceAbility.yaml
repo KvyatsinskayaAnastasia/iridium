@@ -1,0 +1,16 @@
+type: object
+requeired:
+  - id
+  - abilityName
+  - bonus
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+    example: Скрытность
+  bonus:
+    type: integer
+    example: 1
+    description: bonus to level of ability from race

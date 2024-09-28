@@ -15,7 +15,7 @@ public interface CharacterMapper {
      * @return character model
      */
     @Mapping(target = "abilities", ignore = true)
-    @Mapping(target = "race", ignore = true)
+//    @Mapping(target = "race", ignore = true)
     Character toCharacter(CharacterEO characterEO);
 
     /**

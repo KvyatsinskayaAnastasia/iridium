@@ -5,26 +5,27 @@ import com.iridium.library.entity.power.AbilityEO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "character_ability")
+@Table(name = "race_ability")
 @Getter
 @Setter
-public class CharacterAbilityEO extends AbstractEntityEO {
+public class RaceAbilityEO extends AbstractEntityEO {
 
     @ManyToOne
     @JoinColumn(name = "ability_id", nullable = false)
     private AbilityEO ability;
 
-    @ManyToOne
-    @JoinColumn(name = "character_id", nullable = false)
-    private CharacterEO character;
+    @OneToOne
+    @JoinColumn(name = "race_id", nullable = false)
+    private RaceEO race;
 
     /**
-     * Current level of ability.
+     * Race bonus for ability level.
      */
-    private int level;
+    private int bonus;
 }

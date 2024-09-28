@@ -1,0 +1,7 @@
+type: object
+requeired:
+  - id
+properties:
+  id:
+    type: string
+    format: uuid

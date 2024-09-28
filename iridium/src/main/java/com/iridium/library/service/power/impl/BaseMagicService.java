@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -45,5 +46,10 @@ public class BaseMagicService implements MagicService {
     @Override
     public final void deleteMagic(final UUID uuid) {
         magicRepository.deleteById(uuid);
+    }
+
+    @Override
+    public final Set<MagicEO> getAllMagicEntitiesByIds(final Set<UUID> magicIds) {
+        return magicRepository.findByIdIn(magicIds);
     }
 }

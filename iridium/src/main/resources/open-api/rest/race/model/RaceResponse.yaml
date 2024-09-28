@@ -1,8 +1,13 @@
 type: object
 requeired:
+  - id
   - name
   - description
+  - appearance
 properties:
+  id:
+    type: string
+    format: uuid
   name:
     type: string
     example: Нефелимы
@@ -15,18 +20,18 @@ properties:
   baseMagic:
     type: array
     items:
-      $ref: 'RaceMagicRequest.yaml'
+      $ref: 'RaceMagic.yaml'
     uniqueItems: true
     description: base magic available for race
   unavailableMagic:
     type: array
     items:
-      $ref: 'RaceMagicRequest.yaml'
+      $ref: 'RaceMagic.yaml'
     uniqueItems: true
     description: magic, that unavailable for race
   raceAbilities:
     type: array
     items:
-      $ref: 'RaceAbilityRequest.yaml'
+      $ref: 'RaceAbility.yaml'
     uniqueItems: true
     description: special race bonuces for abilities level

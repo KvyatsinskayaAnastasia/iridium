@@ -1,9 +1,11 @@
 package com.iridium.library.service.power;
 
+import com.iridium.library.entity.power.MagicEO;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.MagicResponse;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -41,4 +43,12 @@ public interface MagicService {
      * @param uuid id of magic to delete
      */
     void deleteMagic(UUID uuid);
+
+    /**
+     * Get all magit by ids.
+     *
+     * @param magicIds magic ids
+     * @return magic entities
+     */
+    Set<MagicEO> getAllMagicEntitiesByIds(Set<UUID> magicIds);
 }

@@ -1,0 +1,11 @@
+type: object
+requeired:
+  - id
+  - bonus
+properties:
+  id:
+    type: string
+    format: uuid
+  bonus:
+    type: integer
+    description: bonus to level of ability from race

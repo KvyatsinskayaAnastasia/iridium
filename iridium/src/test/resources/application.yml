@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/iridium
+    url: jdbc:postgresql://localhost:5432/iridium_test
     username: postgres
     password: 123
   jpa:
@@ -14,3 +14,8 @@ logging:
   level:
     org.hibernate: DEBUG
     org.springframework: DEBUG
+
+security:
+  jwt:
+    secret-key: 0a72ff3215be60131eedbf869fb1a2d971116c63ae3bfd0331e0fe82bfb44139
+    expiration-time: 3600000

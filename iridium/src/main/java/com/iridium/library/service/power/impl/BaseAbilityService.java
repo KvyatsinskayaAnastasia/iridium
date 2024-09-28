@@ -1,5 +1,6 @@
 package com.iridium.library.service.power.impl;
 
+import com.iridium.library.entity.power.AbilityEO;
 import com.iridium.library.mapper.power.AbilityMapper;
 import com.iridium.library.repository.power.AbilityRepository;
 import com.iridium.library.service.power.AbilityService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -53,5 +55,10 @@ public class BaseAbilityService implements AbilityService {
     @Override
     public final void deleteAbility(final UUID uuid) {
         abilityRepository.deleteById(uuid);
+    }
+
+    @Override
+    public final Set<AbilityEO> getAllAbilityEntitiesByIds(final Set<UUID> abilityIds) {
+        return abilityRepository.findByIdIn(abilityIds);
     }
 }

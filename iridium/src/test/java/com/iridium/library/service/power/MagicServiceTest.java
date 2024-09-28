@@ -1,6 +1,7 @@
 package com.iridium.library.service.power;
 
 import com.iridium.library.entity.power.SpellEO;
+import com.iridium.library.mapper.power.MagicMapper;
 import com.iridium.library.repository.power.MagicRepository;
 import com.iridium.library.repository.power.SpellRepository;
 import com.iridium.openapi.model.AddMagicRequest;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,10 +32,14 @@ public class MagicServiceTest {
     MagicRepository magicRepository;
     @Autowired
     SpellRepository spellRepository;
+    @Autowired
+    MagicMapper magicMapper;
+
+    private static final UUID MAGIC_ID = UUID.fromString("3f5f2b5d-859d-4471-9b55-1e4a0a4b6a0b");
 
     @Test
-    @DisplayName("test magic save, get and delete")
-    public void testSuccessCreateGetDeleteAbility() {
+    @DisplayName("Test success magic save")
+    public void testSuccessCreateMagic() {
         final var addMagicRequest = Instancio.of(AddMagicRequest.class).create();
         final var magicId = magicService.saveMagic(addMagicRequest);
         final var magicEO = magicRepository.findByIdWithSpells(magicId).orElse(null);
@@ -41,9 +47,15 @@ public class MagicServiceTest {
         assertEquals(addMagicRequest.getDescription(), magicEO.getDescription());
         assertEquals(addMagicRequest.getName(), magicEO.getName());
         assertEquals(addMagicRequest.getSpells().size(), magicEO.getSpells().size());
+    }
 
-        final var magic = magicService.getMagicById(magicId);
+    @Test
+    @DisplayName("Test success get magic")
+    public void testSuccessGetMagic() {
+        final var magic = magicService.getMagicById(MAGIC_ID);
+        final var magicEO = magicRepository.findByIdWithSpells(MAGIC_ID).orElse(null);
         assertNotNull(magic);
+        assertNotNull(magicEO);
         assertEquals(magic.getDescription(), magicEO.getDescription());
         assertEquals(magic.getName(), magicEO.getName());
 
@@ -54,9 +66,14 @@ public class MagicServiceTest {
             assertEquals(spellResponse.getDescription(), spellEO.getDescription());
             assertEquals(spellResponse.getName(), spellEO.getName());
         });
+    }
 
-        magicService.deleteMagic(magicId);
-        assertNull(magicRepository.findById(magicId).orElse(null));
+    @Test
+    @DisplayName("Test success delete magic")
+    public void testSuccessDeleteMagic() {
+        final var magicEO = magicRepository.save(magicMapper.toMagicEO(Instancio.of(AddMagicRequest.class).create()));
+        magicService.deleteMagic(magicEO.getId());
+        assertNull(magicRepository.findById(magicEO.getId()).orElse(null));
         assertTrue(spellRepository.findByIdIn(magicEO.getSpells().stream().map(SpellEO::getId).toList()).isEmpty());
     }
 }

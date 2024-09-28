@@ -17,8 +17,8 @@ properties:
   age:
     type: integer
     example: 24
-  race:
-    $ref: '../../race/model/Race.yaml'
+#  race:
+#    $ref: '../../race/model/Race.yaml'
   gender:
     $ref: 'Gender.yaml'
     example: MALE
