@@ -2,6 +2,7 @@ package com.iridium.library.entity.character;
 
 import com.iridium.common.entity.AbstractEntityEO;
 import com.iridium.library.entity.power.SpellEO;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "character")
@@ -45,8 +47,8 @@ public class CharacterEO extends AbstractEntityEO {
     )
     private Set<SpellEO> spells;
 
-    @OneToMany(mappedBy = "character")
-    private Set<CharacterAbilityEO> characterAbilities;
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL)
+    private Set<CharacterAbilityEO> abilities;
 
     private String temper;
 
@@ -57,4 +59,11 @@ public class CharacterEO extends AbstractEntityEO {
     private String nationality;
 
     private byte[] image;
+
+    @Column(name = "character_type")
+    @Enumerated(EnumType.STRING)
+    private CharacterType characterType;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 }

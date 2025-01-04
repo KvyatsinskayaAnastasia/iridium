@@ -31,6 +31,7 @@ public class RaceController implements RaceApi {
 
     @Override
     public final ResponseEntity<RaceResponse> getRace(final UUID id) {
-        return ResponseEntity.ok(raceService.getRaceById(id));
+        return ResponseEntity.ok(raceService.getRaceById(id, RaceResponse.class));
     }
+
 }

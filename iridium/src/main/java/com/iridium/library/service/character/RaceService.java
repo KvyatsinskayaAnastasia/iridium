@@ -1,7 +1,6 @@
 package com.iridium.library.service.character;
 
 import com.iridium.openapi.model.RaceRequest;
-import com.iridium.openapi.model.RaceResponse;
 import com.iridium.openapi.model.ShortRaceResponse;
 
 import java.util.List;
@@ -31,10 +30,12 @@ public interface RaceService {
     /**
      * Get race by id from db.
      *
-     * @param id the id for the search
-     * @return the race response by received id
+     * @param id id for the search
+     * @param type class of the type of response model
+     * @param <T> type of response model
+     * @return race response by received id and type
      */
-    RaceResponse getRaceById(UUID id);
+    <T> T getRaceById(UUID id, Class<T> type);
 
     /**
      * Delete race by id from db.

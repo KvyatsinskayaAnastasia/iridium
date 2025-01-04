@@ -2,23 +2,22 @@ type: object
 required:
   - name
   - age
-  - race
+  - raceId
   - gender
   - appearance
   - temper
   - biography
 properties:
-  id:
-    type: string
-    format: uuid
   name:
     type: string
     example: Морес
   age:
     type: integer
     example: 24
-  race:
-    $ref: '../../race/model/ShortRaceResponse.yaml'
+  raceId:
+    type: string
+    format: uuid
+    example: d8f73e72-1e80-4c79-a80b-62a4cda028b3
   gender:
     $ref: 'Gender.yaml'
     example: MALE
@@ -29,9 +28,10 @@ properties:
   spells:
     type: array
     items:
-      $ref: '../../magic/model/Spell.yaml'
+      type: string
+      format: uuid
     uniqueItems: true
-    description: the spells that the character knows how to use
+    description: the spell ids that the character knows how to use
   abilities:
     type: array
     items:
@@ -45,7 +45,7 @@ properties:
   biography:
     type: string
     description: short story of the character and his journeys
-    example: жил не тужил, пока не настиг сюжет
+    example: жил не тужил и вот опять сюжет
   aim:
     type: string
     description: currents aim(s) for the character
@@ -56,3 +56,10 @@ properties:
   image:
     type: string
     format: byte
+  characterType:
+    $ref: 'CharacterType.yaml'
+    example: PLAYER
+  userId:
+    type: string
+    format: uuid
+    example: d8f73e72-1e80-4c79-a80b-62a4cda028b3

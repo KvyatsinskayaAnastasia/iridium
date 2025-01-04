@@ -3,6 +3,7 @@ package com.iridium.library.controller.character;
 import com.iridium.library.service.character.impl.BaseCharacterService;
 import com.iridium.openapi.api.CharacterApi;
 import com.iridium.openapi.model.Character;
+import com.iridium.openapi.model.CreateCharacterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class CharacterController implements CharacterApi {
     private final BaseCharacterService characterService;
 
     @Override
-    public final ResponseEntity<UUID> addCharacter(final Character character) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(characterService.saveCharacter(character));
+    public final ResponseEntity<UUID> addCharacter(final CreateCharacterRequest createCharacterRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(characterService.saveCharacter(createCharacterRequest));
     }
 
     @Override

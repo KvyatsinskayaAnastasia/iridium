@@ -3,14 +3,10 @@ required:
   - id
   - name
   - description
-  - abilityType
 properties:
   id:
     type: string
     format: uuid
   name:
     type: string
-    example: Скрытность
-  abilityType:
-    $ref: 'AbilityType.yaml'
-    example: GENERAL
+    example: Жаркое пламя

@@ -10,6 +10,7 @@ import com.iridium.openapi.model.RaceAbilityRequest;
 import com.iridium.openapi.model.RaceMagic;
 import com.iridium.openapi.model.RaceMagicRequest;
 import com.iridium.openapi.model.RaceRequest;
+import com.iridium.openapi.model.RaceResponse;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -40,7 +41,7 @@ public class RaceServiceTest {
 
     @Test
     @DisplayName("test race save, get and delete")
-    public void testSuccessCreateGetDeleteAbility() {
+    public void testSuccessCreateGetDeleteRace() {
         final var addRaceRequest = createRaceRequest();
         final var raceId = raceService.saveRace(addRaceRequest);
         final var raceEO = raceRepository.findById(raceId).orElse(null);
@@ -49,7 +50,7 @@ public class RaceServiceTest {
         assertEquals(addRaceRequest.getName(), raceEO.getName());
         assertEquals(addRaceRequest.getAppearance(), raceEO.getAppearance());
 
-        final var race = raceService.getRaceById(raceId);
+        final var race = raceService.getRaceById(raceId, RaceResponse.class);
         assertNotNull(race);
         assertEquals(race.getDescription(), addRaceRequest.getDescription());
         assertEquals(race.getName(), addRaceRequest.getName());

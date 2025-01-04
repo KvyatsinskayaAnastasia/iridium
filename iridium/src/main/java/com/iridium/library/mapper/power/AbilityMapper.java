@@ -1,9 +1,8 @@
 package com.iridium.library.mapper.power;
 
 import com.iridium.library.entity.power.AbilityEO;
-import com.iridium.library.entity.power.AbilityTypeEO;
+import com.iridium.library.entity.power.AbilityType;
 import com.iridium.openapi.model.Ability;
-import com.iridium.openapi.model.AbilityType;
 import com.iridium.openapi.model.AddAbilityRequest;
 import com.iridium.openapi.model.ShortAbilityResponse;
 import com.iridium.openapi.model.Skill;
@@ -58,7 +57,7 @@ public abstract class AbilityMapper {
      * @param abilityType ability type model
      * @return ability type entity
      */
-    public abstract AbilityTypeEO toAbilityTypeEO(AbilityType abilityType);
+    public abstract AbilityType toAbilityTypeEO(com.iridium.openapi.model.AbilityType abilityType);
 
     /**
      * Add ability id for skillEO after abilityEO mapping.

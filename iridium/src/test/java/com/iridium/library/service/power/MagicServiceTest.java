@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -74,6 +75,6 @@ public class MagicServiceTest {
         final var magicEO = magicRepository.save(magicMapper.toMagicEO(Instancio.of(AddMagicRequest.class).create()));
         magicService.deleteMagic(magicEO.getId());
         assertNull(magicRepository.findById(magicEO.getId()).orElse(null));
-        assertTrue(spellRepository.findByIdIn(magicEO.getSpells().stream().map(SpellEO::getId).toList()).isEmpty());
+        assertTrue(spellRepository.findByIdIn(magicEO.getSpells().stream().map(SpellEO::getId).collect(Collectors.toSet())).isEmpty());
     }
 }

@@ -1,6 +1,6 @@
 package com.iridium.library.entity.power;
 
-public enum AbilityTypeEO {
+public enum AbilityType {
     /**
      * Type for character physical characteristics as health, attack, etc.
      */

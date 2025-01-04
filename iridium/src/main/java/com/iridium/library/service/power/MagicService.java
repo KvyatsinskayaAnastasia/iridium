@@ -1,8 +1,10 @@
 package com.iridium.library.service.power;
 
 import com.iridium.library.entity.power.MagicEO;
+import com.iridium.library.entity.power.SpellEO;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.MagicResponse;
+import com.iridium.openapi.model.ShortMagicResponse;
 
 import java.util.List;
 import java.util.Set;
@@ -27,7 +29,7 @@ public interface MagicService {
      *
      * @return the list of magic responses
      */
-    List<MagicResponse> getAllMagic();
+    List<ShortMagicResponse> getAllMagic();
 
     /**
      * Get magic by id from db.
@@ -45,10 +47,17 @@ public interface MagicService {
     void deleteMagic(UUID uuid);
 
     /**
-     * Get all magit by ids.
+     * Get all magic by ids.
      *
      * @param magicIds magic ids
      * @return magic entities
      */
     Set<MagicEO> getAllMagicEntitiesByIds(Set<UUID> magicIds);
+
+    /**
+     * Get all spells by ids.
+     * @param spells spell ids
+     * @return spell entities
+     */
+    Set<SpellEO> getAllSpellsEntitiesByIds(Set<UUID> spells);
 }

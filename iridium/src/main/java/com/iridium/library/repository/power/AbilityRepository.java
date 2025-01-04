@@ -1,7 +1,7 @@
 package com.iridium.library.repository.power;
 
 import com.iridium.library.entity.power.AbilityEO;
-import com.iridium.library.entity.power.AbilityTypeEO;
+import com.iridium.library.entity.power.AbilityType;
 import com.iridium.common.repository.BaseRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -28,10 +28,10 @@ public interface AbilityRepository extends BaseRepository<AbilityEO, UUID> {
     /**
      * Find abilities from db by ability type.
      *
-     * @param abilityTypeEO the ability type for the search
+     * @param abilityType the ability type for the search
      * @return the abilities entities by received ability type
      */
-    List<AbilityEO> findByAbilityTypeIs(AbilityTypeEO abilityTypeEO);
+    List<AbilityEO> findByAbilityTypeIs(AbilityType abilityType);
 
     /**
      * Find ability from db by ability id.

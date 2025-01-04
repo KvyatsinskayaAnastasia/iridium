@@ -3,6 +3,7 @@ required:
   - id
   - name
   - description
+  - leveledSpells
 properties:
   id:
     type: string
@@ -10,7 +11,8 @@ properties:
   name:
     type: string
     example: огонь
-  description:
-    type: string
-    maxLength: 500
-    example: Огненные маги способны взаимодействовать со стихией огня и устойчивы к жаркому климату благодаря своей особенности договариваться с пламенем. Огонь для такого мага — самый лучший друг и часть их сущности. Нередко они перенимают черты пламени, становясь пылкими, неудержимыми и «горячими».
+  leveledSpells:
+    type: array
+    items:
+      $ref: 'ShortLeveledSpells.yaml'
+    uniqueItems: true

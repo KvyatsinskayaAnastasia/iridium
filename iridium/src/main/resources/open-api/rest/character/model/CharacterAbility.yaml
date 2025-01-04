@@ -1,10 +1,17 @@
 type: object
 required:
-  - ability
+  - abilityId
+  - type
   - level
 properties:
-  ability:
-    $ref: '../../ability/model/Ability.yaml'
+  abilityId:
+    type: string
+    format: uuid
+  abilityName:
+    type: string
+    example: Ловкость
+  abilityType:
+    $ref: '../../ability/model/AbilityType.yaml'
   level:
     type: integer
     description: current level of the ability

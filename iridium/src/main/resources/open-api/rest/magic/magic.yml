@@ -31,4 +31,4 @@ get:
           schema:
             type: array
             items:
-              $ref: 'model/MagicResponse.yaml'
+              $ref: 'model/ShortMagicResponse.yaml'

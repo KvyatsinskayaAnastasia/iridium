@@ -4,7 +4,7 @@ import com.iridium.library.entity.power.SpellEO;
 import com.iridium.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -21,5 +21,5 @@ public interface SpellRepository extends BaseRepository<SpellEO, UUID> {
      * @param spellIds the list of spell ids for the search
      * @return the spell entities by received spell ids
      */
-    List<SpellEO> findByIdIn(List<UUID> spellIds);
+    Set<SpellEO> findByIdIn(Set<UUID> spellIds);
 }

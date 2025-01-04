@@ -1,6 +1,7 @@
 package com.iridium.library.mapper.power;
 
 import com.iridium.library.entity.power.SpellEO;
+import com.iridium.openapi.model.ShortSpellResponse;
 import com.iridium.openapi.model.SpellResponse;
 import org.mapstruct.Mapper;
 
@@ -14,10 +15,18 @@ public interface SpellMapper {
      * @return spell response
      */
     SpellResponse toSpellResponse(SpellEO spellEO);
+
     /**
      * Map set of spell entities to set of spell responses.
      * @param spellEOSet set of spell entities
      * @return set of spell responses
      */
     Set<SpellResponse> toSpellResponseSet(Set<SpellEO> spellEOSet);
+
+    /**
+     * Map set of spell entities to set of short spell responses.
+     * @param spellEOSet set of spell entities
+     * @return set of short spell responses
+     */
+    Set<ShortSpellResponse> toShortSpellResponseSet(Set<SpellEO> spellEOSet);
 }

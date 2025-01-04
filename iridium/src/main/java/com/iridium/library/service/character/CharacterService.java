@@ -1,6 +1,7 @@
 package com.iridium.library.service.character;
 
 import com.iridium.openapi.model.Character;
+import com.iridium.openapi.model.CreateCharacterRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public interface CharacterService {
      * @param character the model of a new character
      * @return the id of created character
      */
-    UUID saveCharacter(Character character);
+    UUID saveCharacter(CreateCharacterRequest character);
 
     /**
      * Get all characters from db.
@@ -29,4 +30,11 @@ public interface CharacterService {
      * @return the character response by received id
      */
     Character getCharacterById(UUID id);
+
+    /**
+     * Delete character by id from db.
+     *
+     * @param uuid id of character to delete
+     */
+    void deleteCharacter(UUID uuid);
 }

@@ -8,7 +8,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: 'model/Character.yaml'
+          $ref: 'model/CreateCharacterRequest.yaml'
     required: true
   responses:
     '201':

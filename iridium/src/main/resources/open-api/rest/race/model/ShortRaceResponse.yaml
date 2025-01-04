@@ -2,8 +2,6 @@ type: object
 requeired:
   - id
   - name
-  - description
-  - appearance
 properties:
   id:
     type: string

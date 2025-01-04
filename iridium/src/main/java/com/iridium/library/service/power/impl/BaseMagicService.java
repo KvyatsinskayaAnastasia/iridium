@@ -1,11 +1,14 @@
 package com.iridium.library.service.power.impl;
 
 import com.iridium.library.entity.power.MagicEO;
+import com.iridium.library.entity.power.SpellEO;
 import com.iridium.library.mapper.power.MagicMapper;
 import com.iridium.library.repository.power.MagicRepository;
+import com.iridium.library.repository.power.SpellRepository;
 import com.iridium.library.service.power.MagicService;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.MagicResponse;
+import com.iridium.openapi.model.ShortMagicResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,7 @@ import java.util.UUID;
 public class BaseMagicService implements MagicService {
 
     private final MagicRepository magicRepository;
+    private final SpellRepository spellRepository;
     private final MagicMapper magicMapper;
 
     @Override
@@ -33,7 +37,7 @@ public class BaseMagicService implements MagicService {
     }
 
     @Override
-    public final List<MagicResponse> getAllMagic() {
+    public final List<ShortMagicResponse> getAllMagic() {
         return magicMapper.toMagicResponseList(magicRepository.findAll());
     }
 
@@ -51,5 +55,10 @@ public class BaseMagicService implements MagicService {
     @Override
     public final Set<MagicEO> getAllMagicEntitiesByIds(final Set<UUID> magicIds) {
         return magicRepository.findByIdIn(magicIds);
+    }
+
+    @Override
+    public final Set<SpellEO> getAllSpellsEntitiesByIds(final Set<UUID> spellIds) {
+        return spellRepository.findByIdIn(spellIds);
     }
 }

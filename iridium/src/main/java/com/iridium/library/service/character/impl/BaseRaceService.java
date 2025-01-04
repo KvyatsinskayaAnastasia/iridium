@@ -90,8 +90,12 @@ public class BaseRaceService implements RaceService {
     }
 
     @Override
-    public final RaceResponse getRaceById(final UUID id) {
-        return raceMapper.toRace(raceRepository.findByIdWithMagicInfoAndAbilityBonuses(id).orElse(null));
+    public final <T> T getRaceById(final UUID id, final Class<T> type) {
+        final var raceEO = raceRepository.findByIdWithMagicInfoAndAbilityBonuses(id).orElse(null);
+        if (type.equals(RaceResponse.class)) {
+            return (T) raceMapper.toRace(raceEO);
+        }
+        return (T) raceEO;
     }
 
     @Override

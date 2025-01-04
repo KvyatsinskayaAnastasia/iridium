@@ -5,6 +5,8 @@ import com.iridium.library.entity.power.SpellEO;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.LeveledSpells;
 import com.iridium.openapi.model.MagicResponse;
+import com.iridium.openapi.model.ShortLeveledSpells;
+import com.iridium.openapi.model.ShortMagicResponse;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -33,7 +35,7 @@ public abstract class MagicMapper {
      * @param magicEOList list of magic entities
      * @return list of magic responses
      */
-    public abstract List<MagicResponse> toMagicResponseList(List<MagicEO> magicEOList);
+    public abstract List<ShortMagicResponse> toMagicResponseList(List<MagicEO> magicEOList);
 
     /**
      * Map magic model to magic entity.
@@ -43,6 +45,41 @@ public abstract class MagicMapper {
      */
     @Mapping(target = "id", ignore = true)
     public abstract MagicEO toMagicEO(AddMagicRequest addMagicRequest);
+
+    /**
+     * Map magic entity to short magic response.
+     *
+     * @param magicEO magic entity
+     * @return short magic response
+     */
+    public ShortMagicResponse toShortMagicResponse(final MagicEO magicEO) {
+        if (null == magicEO) {
+            return null;
+        }
+
+        final ShortMagicResponse magicResponse = new ShortMagicResponse();
+
+        magicResponse.setId(magicEO.getId());
+        magicResponse.setName(magicEO.getName());
+
+        final Map<Integer, Set<SpellEO>> leveledSpells = magicEO
+            .getSpells()
+            .stream()
+            .collect(Collectors.groupingBy(SpellEO::getLevel,
+                Collectors.mapping(Function.identity(), Collectors.toSet())))
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByKey())
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
+
+        magicResponse.setLeveledSpells(leveledSpells.entrySet().stream().map(leveledSpell ->
+            new ShortLeveledSpells()
+                .level(leveledSpell.getKey())
+                .spells(spellMapper.toShortSpellResponseSet(leveledSpell.getValue())))
+            .collect(Collectors.toCollection(LinkedHashSet::new)));
+
+        return magicResponse;
+    }
 
     /**
      * Map magic entity to magic response.

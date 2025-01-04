@@ -28,7 +28,7 @@ public class AbilityEO extends AbstractEntityEO {
 
     @Column(name = "ability_type")
     @Enumerated(EnumType.STRING)
-    private AbilityTypeEO abilityType;
+    private AbilityType abilityType;
 
     @OneToMany(mappedBy = "ability", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<SkillEO> skills;
