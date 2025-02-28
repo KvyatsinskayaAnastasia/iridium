@@ -3,6 +3,7 @@ package com.iridium.library.service.power;
 import com.iridium.library.entity.power.MagicEO;
 import com.iridium.library.entity.power.SpellEO;
 import com.iridium.openapi.model.AddMagicRequest;
+import com.iridium.openapi.model.CharacterSpell;
 import com.iridium.openapi.model.MagicResponse;
 import com.iridium.openapi.model.ShortMagicResponse;
 
@@ -56,8 +57,23 @@ public interface MagicService {
 
     /**
      * Get all spells by ids.
-     * @param spells spell ids
+     * @param spellIds spell ids
      * @return spell entities
      */
-    Set<SpellEO> getAllSpellsEntitiesByIds(Set<UUID> spells);
+    Set<SpellEO> getAllSpellsEntitiesByIds(Set<UUID> spellIds);
+
+    /**
+     * Get all spells for magic and it's max level.
+     * @param magicId magic id
+     * @param maxLevel max level of spells
+     * @return spell entities
+     */
+    Set<CharacterSpell> getAllCharacterSpellsForMagic(UUID magicId, int maxLevel);
+
+    /**
+     * Get all magic ids except received.
+     * @param magicIds magic ids
+     * @return magic ids
+     */
+    List<UUID> getAllMagicIdsNotIn(Set<UUID> magicIds);
 }

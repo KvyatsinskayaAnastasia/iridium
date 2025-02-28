@@ -1,0 +1,8 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  level:
+    type: integer
+    description: the level of the spell

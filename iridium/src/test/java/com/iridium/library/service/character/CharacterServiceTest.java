@@ -3,25 +3,21 @@ package com.iridium.library.service.character;
 import com.iridium.library.repository.character.CharacterRepository;
 import com.iridium.library.repository.character.RaceRepository;
 import com.iridium.library.repository.power.AbilityRepository;
-import com.iridium.library.repository.power.MagicRepository;
 import com.iridium.library.repository.power.SpellRepository;
-import com.iridium.openapi.model.Ability;
 import com.iridium.openapi.model.CharacterAbility;
 import com.iridium.openapi.model.CharacterType;
 import com.iridium.openapi.model.CreateCharacterRequest;
 import com.iridium.openapi.model.Gender;
-import com.iridium.openapi.model.RaceAbility;
-import com.iridium.openapi.model.RaceAbilityRequest;
-import com.iridium.openapi.model.RaceMagic;
-import com.iridium.openapi.model.RaceMagicRequest;
-import com.iridium.openapi.model.RaceRequest;
-import com.iridium.openapi.model.RaceResponse;
 import com.iridium.openapi.model.Spell;
+import com.iridium.openapi.model.User;
+import com.iridium.security.service.user.AuthorizationService;
+import org.instancio.Instancio;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
@@ -31,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -47,9 +44,14 @@ public class CharacterServiceTest {
     @Autowired
     CharacterRepository characterRepository;
 
+    @MockBean
+    AuthorizationService authorizationService;
+
     @Test
     @DisplayName("test character save, get and delete")
     public void testSuccessCreateGetDeleteCharacter() {
+        final var user = Instancio.of(User.class).create();
+        when(authorizationService.getCurrentUser()).thenReturn(user);
         final var addCharacterRequest = createCharacterRequest();
         final var characterId = characterService.saveCharacter(addCharacterRequest);
         final var characterEO = characterRepository.findById(characterId).orElse(null);
@@ -77,7 +79,7 @@ public class CharacterServiceTest {
         assertEquals(addCharacterRequest.getNationality(), character.getNationality());
         assertNotNull(character.getSpells());
         assertTrue(character.getSpells().stream().map(Spell::getId).toList()
-                .containsAll(addCharacterRequest.getSpells().stream().toList()));
+            .containsAll(addCharacterRequest.getSpells().stream().toList()));
         assertNotNull(character.getAbilities());
         assertTrue(character.getAbilities().stream().map(CharacterAbility::getAbilityId).toList()
             .containsAll(addCharacterRequest.getAbilities().stream().map(CharacterAbility::getAbilityId).toList()));
@@ -89,6 +91,12 @@ public class CharacterServiceTest {
         addCharacterRequest.getAbilities().forEach(ability ->
             assertNotNull(abilityRepository.findById(ability.getAbilityId()).orElse(null)));
         assertNotNull(raceRepository.findById(addCharacterRequest.getRaceId()).orElse(null));
+    }
+
+    @Test
+    @DisplayName("test generate character")
+    public void testSuccessGenerateCharacter() {
+        characterService.generateCharacter();
     }
 
     private CreateCharacterRequest createCharacterRequest() {
@@ -108,7 +116,6 @@ public class CharacterServiceTest {
         characterRequest.setBiography("test biography");
         characterRequest.setAim("test aim");
         characterRequest.setNationality("test nationality");
-        characterRequest.setUserId(UUID.randomUUID());
         return characterRequest;
     }
 }

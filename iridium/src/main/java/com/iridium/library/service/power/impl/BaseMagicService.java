@@ -7,6 +7,7 @@ import com.iridium.library.repository.power.MagicRepository;
 import com.iridium.library.repository.power.SpellRepository;
 import com.iridium.library.service.power.MagicService;
 import com.iridium.openapi.model.AddMagicRequest;
+import com.iridium.openapi.model.CharacterSpell;
 import com.iridium.openapi.model.MagicResponse;
 import com.iridium.openapi.model.ShortMagicResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Base service to work with magic model.
@@ -60,5 +62,17 @@ public class BaseMagicService implements MagicService {
     @Override
     public final Set<SpellEO> getAllSpellsEntitiesByIds(final Set<UUID> spellIds) {
         return spellRepository.findByIdIn(spellIds);
+    }
+
+    @Override
+    public final Set<CharacterSpell> getAllCharacterSpellsForMagic(final UUID magicId, final int maxLevel) {
+        return spellRepository.findByMagicIdAndLevelLessThanEqual(magicId, maxLevel).stream()
+            .map(spellEO -> new CharacterSpell().id(spellEO.getId()).level(spellEO.getLevel()))
+            .collect(Collectors.toSet());
+    }
+
+    @Override
+    public final List<UUID> getAllMagicIdsNotIn(final Set<UUID> magicIds) {
+        return magicRepository.findByIdIsNotIn(magicIds).stream().map(MagicEO::getId).toList();
     }
 }

@@ -1,0 +1,18 @@
+post:
+  tags:
+    - character
+  description: pre generate character data
+  operationId: generateCharacter
+  requestBody:
+    description: settings for generator
+    content:
+      application/json:
+        schema:
+          $ref: 'model/GeneratorSettings.yaml'
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: 'model/PreGeneratedCharacter.yaml'

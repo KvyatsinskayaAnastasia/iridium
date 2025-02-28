@@ -43,7 +43,7 @@ public class BaseAuthorizationService implements AuthorizationService {
     }
 
     @Override
-    public final User currentUser() {
+    public final User getCurrentUser() {
         if (null != SecurityContextHolder.getContext()
             && SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails user) {
             return userService.findUserByUsername(user.getUsername());

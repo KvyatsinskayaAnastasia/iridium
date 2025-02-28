@@ -38,6 +38,7 @@ public interface CharacterMapper {
     @Mapping(target = "abilities", ignore = true)
     @Mapping(target = "spells", ignore = true)
     @Mapping(target = "race", ignore = true)
+    @Mapping(target = "userId", ignore = true)
     CharacterEO toCharacterEO(CreateCharacterRequest character);
 
     /**

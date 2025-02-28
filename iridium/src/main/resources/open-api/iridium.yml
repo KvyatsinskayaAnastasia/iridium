@@ -10,6 +10,8 @@ paths:
     $ref: 'rest/character/character.yml'
   /character/{id}:
     $ref: 'rest/character/get-character.yml'
+  /character/generate:
+    $ref: 'rest/character/generate-character.yml'
 
   /ability:
     $ref: 'rest/ability/ability.yml'

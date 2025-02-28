@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  spells:
+    type: array
+    items:
+      $ref: 'CharacterSpell.yaml'
+    uniqueItems: true
+    description: the spells that the character knows how to use

@@ -2,6 +2,7 @@ package com.iridium.library.service.character;
 
 import com.iridium.openapi.model.Character;
 import com.iridium.openapi.model.CreateCharacterRequest;
+import com.iridium.openapi.model.PreGeneratedCharacter;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,4 +38,10 @@ public interface CharacterService {
      * @param uuid id of character to delete
      */
     void deleteCharacter(UUID uuid);
+
+    /**
+     * Generate character data.
+     * @return pre generated character model
+     */
+    PreGeneratedCharacter generateCharacter();
 }

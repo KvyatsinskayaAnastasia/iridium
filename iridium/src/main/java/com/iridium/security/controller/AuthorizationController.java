@@ -27,7 +27,7 @@ public class AuthorizationController implements AuthorizationApi {
     }
 
     @Override
-    public final ResponseEntity<User> currentUser() {
-        return ResponseEntity.ok(authorizationService.currentUser());
+    public final ResponseEntity<User> getCurrentUser() {
+        return ResponseEntity.ok(authorizationService.getCurrentUser());
     }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -42,4 +43,12 @@ public interface MagicRepository extends BaseRepository<MagicEO, UUID> {
      * @return the magic entities
      */
     Set<MagicEO> findByIdIn(Set<UUID> magicIds);
+
+    /**
+     * Find magic from db by magic ids is not in.
+     *
+     * @param magicIds the magic ids
+     * @return the magic ids
+     */
+    List<MagicEO> findByIdIsNotIn(Set<UUID> magicIds);
 }

@@ -24,5 +24,5 @@ public interface AuthorizationService {
      * Get authorized user.
      * @return user model
      */
-    User currentUser();
+    User getCurrentUser();
 }
