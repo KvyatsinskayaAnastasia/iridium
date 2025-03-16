@@ -1,5 +1,5 @@
 type: object
-requeired:
+required:
   - id
   - name
 properties:
@@ -8,4 +8,7 @@ properties:
     format: uuid
   name:
     type: string
-    example: Нефелимы
+    example: Нефилимы
+  description:
+    type: string
+    example: Описание расы

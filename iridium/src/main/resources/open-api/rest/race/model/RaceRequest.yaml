@@ -1,11 +1,11 @@
 type: object
-requeired:
+required:
   - name
   - description
 properties:
   name:
     type: string
-    example: Нефелимы
+    example: Нефилимы
   description:
     type: string
     example: Нефилимы — далекие потомки богов, которые сошли с ума и после своего свержения исчезли с лица Иридиума...

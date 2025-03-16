@@ -36,7 +36,7 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private static final String[] AUTH_WHITELIST = {
-        "/authorization/**"
+            "/authorization/**"
     };
 
     /**
@@ -49,21 +49,21 @@ public class SecurityConfiguration {
     @SneakyThrows
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) {
         return http.csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configurationSource(request -> {
-                final var corsConfiguration = new CorsConfiguration();
-                corsConfiguration.setAllowedOriginPatterns(List.of("*"));
-                corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-                corsConfiguration.setAllowedHeaders(List.of("*"));
-                corsConfiguration.setAllowCredentials(true);
-                return corsConfiguration;
-            }))
-            .authorizeHttpRequests(request -> request
-                .requestMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated())
-            .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .cors(cors -> cors.configurationSource(request -> {
+                    final var corsConfiguration = new CorsConfiguration();
+                    corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+                    corsConfiguration.setAllowedHeaders(List.of("*"));
+                    corsConfiguration.setAllowCredentials(true);
+                    return corsConfiguration;
+                }))
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     /**
@@ -74,7 +74,7 @@ public class SecurityConfiguration {
     @Bean
     UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     /**
@@ -85,7 +85,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public AuthenticationManager authenticationManager(
-        final AuthenticationConfiguration authenticationConfiguration) throws Exception {
+            final AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

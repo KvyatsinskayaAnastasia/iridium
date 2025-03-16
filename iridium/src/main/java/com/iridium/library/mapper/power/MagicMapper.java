@@ -5,7 +5,6 @@ import com.iridium.library.entity.power.SpellEO;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.LeveledSpells;
 import com.iridium.openapi.model.MagicResponse;
-import com.iridium.openapi.model.ShortLeveledSpells;
 import com.iridium.openapi.model.ShortMagicResponse;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -52,34 +51,7 @@ public abstract class MagicMapper {
      * @param magicEO magic entity
      * @return short magic response
      */
-    public ShortMagicResponse toShortMagicResponse(final MagicEO magicEO) {
-        if (null == magicEO) {
-            return null;
-        }
-
-        final ShortMagicResponse magicResponse = new ShortMagicResponse();
-
-        magicResponse.setId(magicEO.getId());
-        magicResponse.setName(magicEO.getName());
-
-        final Map<Integer, Set<SpellEO>> leveledSpells = magicEO
-            .getSpells()
-            .stream()
-            .collect(Collectors.groupingBy(SpellEO::getLevel,
-                Collectors.mapping(Function.identity(), Collectors.toSet())))
-            .entrySet()
-            .stream()
-            .sorted(Map.Entry.comparingByKey())
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
-
-        magicResponse.setLeveledSpells(leveledSpells.entrySet().stream().map(leveledSpell ->
-            new ShortLeveledSpells()
-                .level(leveledSpell.getKey())
-                .spells(spellMapper.toShortSpellResponseSet(leveledSpell.getValue())))
-            .collect(Collectors.toCollection(LinkedHashSet::new)));
-
-        return magicResponse;
-    }
+    public abstract ShortMagicResponse toShortMagicResponse(MagicEO magicEO);
 
     /**
      * Map magic entity to magic response.
