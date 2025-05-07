@@ -21,15 +21,14 @@ properties:
     $ref: '../../race/model/ShortRaceResponse.yaml'
   gender:
     $ref: 'Gender.yaml'
-    example: MALE
   appearance:
     type: string
     description: description of the character appearance, habits in gestures, facial expressions, unexpected signs
     example: Светлые волосы, серые глаза, пепельные крылья
-  spells:
+  magic:
     type: array
     items:
-      $ref: '../../magic/model/Spell.yaml'
+      $ref: 'CharacterMagic.yaml'
     uniqueItems: true
     description: the spells that the character knows how to use
   abilities:
@@ -53,6 +52,6 @@ properties:
   nationality:
     type: string
     example: Пендрагон
-  image:
+  imageUrl:
     type: string
-    format: byte
+    format: binary

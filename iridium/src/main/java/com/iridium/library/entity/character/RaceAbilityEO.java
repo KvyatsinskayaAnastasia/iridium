@@ -5,7 +5,6 @@ import com.iridium.library.entity.power.AbilityEO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +19,7 @@ public class RaceAbilityEO extends AbstractEntityEO {
     @JoinColumn(name = "ability_id", nullable = false)
     private AbilityEO ability;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "race_id", nullable = false)
     private RaceEO race;
 

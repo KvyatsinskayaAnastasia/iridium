@@ -2,11 +2,15 @@ type: object
 required:
   - id
   - name
+  - leveledSpells
 properties:
   id:
     type: string
     format: uuid
   name:
+    type: string
+    example: огонь
+  description:
     type: string
     example: Магия огня
   description:

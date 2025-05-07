@@ -4,9 +4,6 @@ required:
   - age
   - raceId
   - gender
-  - appearance
-  - temper
-  - biography
 properties:
   name:
     type: string
@@ -20,7 +17,6 @@ properties:
     example: d8f73e72-1e80-4c79-a80b-62a4cda028b3
   gender:
     $ref: 'Gender.yaml'
-    example: MALE
   appearance:
     type: string
     description: description of the character appearance, habits in gestures, facial expressions, unexpected signs
@@ -53,9 +49,5 @@ properties:
   nationality:
     type: string
     example: Пендрагон
-  image:
-    type: string
-    format: byte
   characterType:
     $ref: 'CharacterType.yaml'
-    example: PLAYER

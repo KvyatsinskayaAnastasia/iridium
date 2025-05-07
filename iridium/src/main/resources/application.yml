@@ -27,3 +27,6 @@ springdoc:
     server.name: /
     disable-swagger-default-url: false
     configUrl: /v3/api-docs/swagger-config
+
+attachments:
+  directory: D:\IridiumProgect\backend\iridium\src\main\resources\attaches

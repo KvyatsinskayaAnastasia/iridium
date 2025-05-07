@@ -5,10 +5,10 @@ import com.iridium.library.repository.character.RaceRepository;
 import com.iridium.library.repository.power.AbilityRepository;
 import com.iridium.library.repository.power.SpellRepository;
 import com.iridium.openapi.model.CharacterAbility;
+import com.iridium.openapi.model.CharacterMagic;
 import com.iridium.openapi.model.CharacterType;
 import com.iridium.openapi.model.CreateCharacterRequest;
 import com.iridium.openapi.model.Gender;
-import com.iridium.openapi.model.Spell;
 import com.iridium.openapi.model.User;
 import com.iridium.security.service.user.AuthorizationService;
 import org.instancio.Instancio;
@@ -53,7 +53,7 @@ public class CharacterServiceTest {
         final var user = Instancio.of(User.class).create();
         when(authorizationService.getCurrentUser()).thenReturn(user);
         final var addCharacterRequest = createCharacterRequest();
-        final var characterId = characterService.saveCharacter(addCharacterRequest);
+        final var characterId = characterService.saveCharacter(addCharacterRequest, null);
         final var characterEO = characterRepository.findById(characterId).orElse(null);
         assertNotNull(characterEO);
         assertEquals(addCharacterRequest.getName(), characterEO.getName());
@@ -77,8 +77,8 @@ public class CharacterServiceTest {
         assertEquals(addCharacterRequest.getBiography(), character.getBiography());
         assertEquals(addCharacterRequest.getAim(), character.getAim());
         assertEquals(addCharacterRequest.getNationality(), character.getNationality());
-        assertNotNull(character.getSpells());
-        assertTrue(character.getSpells().stream().map(Spell::getId).toList()
+        assertNotNull(character.getMagic());
+        assertTrue(character.getMagic().stream().map(CharacterMagic::getId).toList()
             .containsAll(addCharacterRequest.getSpells().stream().toList()));
         assertNotNull(character.getAbilities());
         assertTrue(character.getAbilities().stream().map(CharacterAbility::getAbilityId).toList()

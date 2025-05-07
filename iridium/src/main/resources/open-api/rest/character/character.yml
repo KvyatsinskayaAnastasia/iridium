@@ -1,14 +1,19 @@
 post:
   tags:
     - character
-  description: add a new character to the library
-  operationId: addCharacter
+  description: save new character
+  operationId: saveCharacter
   requestBody:
     description: model of the character
     content:
-      application/json:
+      multipart/form-data:
         schema:
-          $ref: 'model/CreateCharacterRequest.yaml'
+          properties:
+            character:
+              $ref: 'model/CreateCharacterRequest.yaml'
+            image:
+              type: string
+              format: binary
     required: true
   responses:
     '201':

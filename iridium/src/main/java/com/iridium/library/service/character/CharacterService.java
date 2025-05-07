@@ -3,7 +3,9 @@ package com.iridium.library.service.character;
 import com.iridium.openapi.model.Character;
 import com.iridium.openapi.model.CreateCharacterRequest;
 import com.iridium.openapi.model.PreGeneratedCharacter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,9 +17,11 @@ public interface CharacterService {
     /**
      * Save character in db.
      * @param character the model of a new character
+     * @param image image for described character
      * @return the id of created character
+     * @throws IOException exception
      */
-    UUID saveCharacter(CreateCharacterRequest character);
+    UUID saveCharacter(CreateCharacterRequest character, MultipartFile image) throws IOException;
 
     /**
      * Get all characters from db.

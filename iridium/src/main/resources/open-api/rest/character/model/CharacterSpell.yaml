@@ -3,6 +3,8 @@ properties:
   id:
     type: string
     format: uuid
+  name:
+    type: string
   level:
     type: integer
     description: the level of the spell

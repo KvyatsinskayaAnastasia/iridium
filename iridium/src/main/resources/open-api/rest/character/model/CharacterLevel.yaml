@@ -3,4 +3,4 @@ enum:
   - SMALL #0-5 for basic abilities, max 2 fight skills, only magic or physic
   - MEDIUM #0-10 for basic abilities, max 3 fight skills, only magic or physic
   - BIG #5-15 for basic abilities, max 5 fight skills, can e magic and physic
-  - GREATE #5-20 for basic abilities, max 6 fight skills, can e magic and physic
+  - GREAT #5-20 for basic abilities, max 6 fight skills, can e magic and physic

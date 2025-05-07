@@ -51,7 +51,35 @@ public abstract class MagicMapper {
      * @param magicEO magic entity
      * @return short magic response
      */
-    public abstract ShortMagicResponse toShortMagicResponse(MagicEO magicEO);
+    public ShortMagicResponse toShortMagicResponse(final MagicEO magicEO) {
+        if (null == magicEO) {
+            return null;
+        }
+
+        final ShortMagicResponse magicResponse = new ShortMagicResponse();
+
+        magicResponse.setId(magicEO.getId());
+        magicResponse.setName(magicEO.getName());
+        magicResponse.setDescription(magicEO.getDescription());
+
+        final Map<Integer, Set<SpellEO>> leveledSpells = magicEO
+            .getSpells()
+            .stream()
+            .collect(Collectors.groupingBy(SpellEO::getLevel,
+                Collectors.mapping(Function.identity(), Collectors.toSet())))
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByKey())
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
+
+        magicResponse.setLeveledSpells(leveledSpells.entrySet().stream().map(leveledSpell ->
+            new ShortLeveledSpells()
+                .level(leveledSpell.getKey())
+                .spells(spellMapper.toShortSpellResponseSet(leveledSpell.getValue())))
+            .collect(Collectors.toCollection(LinkedHashSet::new)));
+
+        return magicResponse;
+    }
 
     /**
      * Map magic entity to magic response.

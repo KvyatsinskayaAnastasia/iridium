@@ -8,6 +8,7 @@ import com.iridium.library.model.character.AgesStage;
 import com.iridium.library.model.character.CharacterLevel;
 import com.iridium.library.repository.character.CharacterAbilityRepository;
 import com.iridium.library.repository.character.CharacterRepository;
+import com.iridium.library.service.attachment.AttachmentService;
 import com.iridium.library.service.character.CharacterService;
 import com.iridium.library.service.character.RaceService;
 import com.iridium.library.service.power.AbilityService;
@@ -24,6 +25,8 @@ import com.iridium.security.service.user.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;
@@ -55,15 +58,19 @@ public class BaseCharacterService implements CharacterService {
     private final RaceService raceService;
     private final AbilityService abilityService;
     private final MagicService magicService;
+    private final AttachmentService attachmentService;
 
     private final AuthorizationService authorizationService;
 
     @Override
-    public final UUID saveCharacter(final CreateCharacterRequest character) {
+    public final UUID saveCharacter(final CreateCharacterRequest character, final MultipartFile image) {
         final var newCharacter = characterMapper.toCharacterEO(character);
         newCharacter.setUserId(authorizationService.getCurrentUser().getId());
         newCharacter.setRace(raceService.getRaceById(character.getRaceId(), RaceEO.class));
         newCharacter.setSpells(magicService.getAllSpellsEntitiesByIds(character.getSpells()));
+        if (image != null) {
+            newCharacter.setImage(attachmentService.saveAttachment(image));
+        }
         final var savedCharacter = characterRepository.save(newCharacter);
 
         final var abilitiesMap = character.getAbilities().stream()
@@ -155,21 +162,35 @@ public class BaseCharacterService implements CharacterService {
             ? magicService.getAllMagicIdsNotIn(unavailableMagic.stream()
                 .map(MagicEO::getId).collect(Collectors.toSet()))
             : magicService.getAllMagic().stream().map(ShortMagicResponse::getId).toList();
-        final var baseMagicId = race.getBaseMagic().stream().map(MagicEO::getId).toList()
-            .get(RandomUtils.nextInt(0, race.getBaseMagic().size() - 1));
-        final var secondaryMagicIds = randomFromList(magicIds.stream()
-            .filter(magicId -> !baseMagicId.equals(magicId)).toList(), magicCount);
-        final Set<CharacterMagic> characterMagics = new HashSet<>();
-        characterMagics.add(new CharacterMagic()
-            .id(baseMagicId)
-            .spells(magicService.getAllCharacterSpellsForMagic(baseMagicId,
-                RandomUtils.nextInt(1, characterLevel.getMaxMagicLevel()))));
-        for (final var secondaryMagicId : secondaryMagicIds) {
+        if (!CollectionUtils.isEmpty(magicIds)) {
+            final var baseMagicId = generateBaseMagicId(race, magicIds);
+            final Set<CharacterMagic> characterMagics = new HashSet<>();
             characterMagics.add(new CharacterMagic()
-                .id(secondaryMagicId)
-                .spells(magicService.getAllCharacterSpellsForMagic(
-                    secondaryMagicId, RandomUtils.nextInt(1, characterLevel.getMaxMagicLevel()))));
+                    .id(baseMagicId)
+                    .spells(magicService.getAllCharacterSpellsForMagic(baseMagicId,
+                            RandomUtils.nextInt(1, characterLevel.getMaxMagicLevel()))));
+            final var secondaryMagicIds = randomFromList(magicIds.stream()
+                    .filter(magicId -> !magicId.equals(baseMagicId)).toList(), magicCount);
+            for (final var secondaryMagicId : secondaryMagicIds) {
+                characterMagics.add(new CharacterMagic()
+                        .id(secondaryMagicId)
+                        .spells(magicService.getAllCharacterSpellsForMagic(
+                                secondaryMagicId, RandomUtils.nextInt(1, characterLevel.getMaxMagicLevel()))));
+            }
+            return characterMagics;
         }
-        return characterMagics;
+        return null;
+    }
+
+    private UUID generateBaseMagicId(final RaceEO race, final List<UUID> magicIds) {
+        if (CollectionUtils.isEmpty(race.getBaseMagic())) {
+            return magicIds.size() > 1
+                    ? magicIds.get(RandomUtils.nextInt(0, magicIds.size() - 1))
+                    : magicIds.get(0);
+        }
+        return race.getBaseMagic().size() > 1
+                ? race.getBaseMagic().stream().map(MagicEO::getId).toList()
+                .get(RandomUtils.nextInt(0, race.getBaseMagic().size() - 1))
+                : race.getBaseMagic().iterator().next().getId();
     }
 }

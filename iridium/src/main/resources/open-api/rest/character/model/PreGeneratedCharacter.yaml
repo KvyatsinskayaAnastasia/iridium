@@ -20,13 +20,12 @@ properties:
     example: d8f73e72-1e80-4c79-a80b-62a4cda028b3
   gender:
     $ref: 'Gender.yaml'
-    example: MALE
   magics:
     type: array
     items:
       $ref: 'CharacterMagic.yaml'
     uniqueItems: true
-    description: the msgic schools that the character knows how to use
+    description: the magic schools that the character knows how to use
   abilities:
     type: array
     items:
