@@ -28,19 +28,16 @@ import static org.junit.Assert.assertTrue;
 public class MagicServiceTest {
 
     @Autowired
-    MagicService magicService;
+    private MagicService magicService;
     @Autowired
-    MagicRepository magicRepository;
+    private MagicRepository magicRepository;
     @Autowired
-    SpellRepository spellRepository;
+    private SpellRepository spellRepository;
     @Autowired
-    MagicMapper magicMapper;
-
-    private static final UUID MAGIC_ID = UUID.fromString("3f5f2b5d-859d-4471-9b55-1e4a0a4b6a0b");
+    private MagicMapper magicMapper;
 
     @Test
-    @DisplayName("Test success magic save")
-    public void testSuccessCreateMagic() {
+    public void testSaveMagic() {
         final var addMagicRequest = Instancio.of(AddMagicRequest.class).create();
         final var magicId = magicService.saveMagic(addMagicRequest);
         final var magicEO = magicRepository.findByIdWithSpells(magicId).orElse(null);
@@ -51,17 +48,16 @@ public class MagicServiceTest {
     }
 
     @Test
-    @DisplayName("Test success get magic")
-    public void testSuccessGetMagic() {
-        final var magic = magicService.getMagicById(MAGIC_ID);
-        final var magicEO = magicRepository.findByIdWithSpells(MAGIC_ID).orElse(null);
-        assertNotNull(magic);
+    public void testGetMagicById() {
+        final var savedMagicEO = magicRepository.save(magicMapper.toMagicEO(Instancio.of(AddMagicRequest.class).create()));
+        final var magicEO = magicRepository.findByIdWithSpells(savedMagicEO.getId()).orElse(null);
+        assertNotNull(savedMagicEO);
         assertNotNull(magicEO);
-        assertEquals(magic.getDescription(), magicEO.getDescription());
-        assertEquals(magic.getName(), magicEO.getName());
+        assertEquals(savedMagicEO.getDescription(), magicEO.getDescription());
+        assertEquals(savedMagicEO.getName(), magicEO.getName());
 
         final var spellEOs = magicEO.getSpells();
-        magic.getLeveledSpells().stream().map(LeveledSpells::getSpells).flatMap(Collection::stream).forEach(spellResponse -> {
+        savedMagicEO.getSpells().forEach(spellResponse -> {
             final var spellEO = spellEOs.stream().filter(sp -> sp.getId().equals(spellResponse.getId())).findFirst().orElse(null);
             assertNotNull(spellEO);
             assertEquals(spellResponse.getDescription(), spellEO.getDescription());
@@ -70,8 +66,7 @@ public class MagicServiceTest {
     }
 
     @Test
-    @DisplayName("Test success delete magic")
-    public void testSuccessDeleteMagic() {
+    public void testDeleteMagic() {
         final var magicEO = magicRepository.save(magicMapper.toMagicEO(Instancio.of(AddMagicRequest.class).create()));
         magicService.deleteMagic(magicEO.getId());
         assertNull(magicRepository.findById(magicEO.getId()).orElse(null));

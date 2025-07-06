@@ -40,8 +40,7 @@ public class RaceServiceTest {
     RaceRepository raceRepository;
 
     @Test
-    @DisplayName("test race save, get and delete")
-    public void testSuccessCreateGetDeleteRace() {
+    public void testSaveGetDeleteRace() {
         final var addRaceRequest = createRaceRequest();
         final var raceId = raceService.saveRace(addRaceRequest);
         final var raceEO = raceRepository.findById(raceId).orElse(null);

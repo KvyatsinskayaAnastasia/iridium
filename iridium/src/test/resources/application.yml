@@ -2,13 +2,16 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/iridium_test
     username: postgres
-    password: 123
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: validate
   flyway:
     baselineOnMigrate: true
     enabled: true
+
+attachments:
+  directory: D:\IridiumProgect\backend\iridium\src\test\resources
 
 logging:
   level:

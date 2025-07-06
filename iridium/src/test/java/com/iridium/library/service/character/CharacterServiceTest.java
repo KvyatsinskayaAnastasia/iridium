@@ -1,11 +1,13 @@
 package com.iridium.library.service.character;
 
+import com.iridium.library.entity.power.SpellEO;
 import com.iridium.library.repository.character.CharacterRepository;
 import com.iridium.library.repository.character.RaceRepository;
 import com.iridium.library.repository.power.AbilityRepository;
 import com.iridium.library.repository.power.SpellRepository;
 import com.iridium.openapi.model.CharacterAbility;
 import com.iridium.openapi.model.CharacterMagic;
+import com.iridium.openapi.model.CharacterSpell;
 import com.iridium.openapi.model.CharacterType;
 import com.iridium.openapi.model.CreateCharacterRequest;
 import com.iridium.openapi.model.Gender;
@@ -20,6 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,23 +37,22 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class CharacterServiceTest {
     @Autowired
-    SpellRepository spellRepository;
+    private SpellRepository spellRepository;
     @Autowired
-    AbilityRepository abilityRepository;
+    private AbilityRepository abilityRepository;
     @Autowired
-    RaceRepository raceRepository;
+    private RaceRepository raceRepository;
 
     @Autowired
-    CharacterService characterService;
+    private CharacterService characterService;
     @Autowired
-    CharacterRepository characterRepository;
+    private CharacterRepository characterRepository;
 
     @MockBean
     AuthorizationService authorizationService;
 
     @Test
-    @DisplayName("test character save, get and delete")
-    public void testSuccessCreateGetDeleteCharacter() {
+    public void testSaveGetDeleteCharacter() throws IOException {
         final var user = Instancio.of(User.class).create();
         when(authorizationService.getCurrentUser()).thenReturn(user);
         final var addCharacterRequest = createCharacterRequest();
@@ -78,7 +81,10 @@ public class CharacterServiceTest {
         assertEquals(addCharacterRequest.getAim(), character.getAim());
         assertEquals(addCharacterRequest.getNationality(), character.getNationality());
         assertNotNull(character.getMagic());
-        assertTrue(character.getMagic().stream().map(CharacterMagic::getId).toList()
+        assertTrue(character.getMagic().stream()
+                .map(CharacterMagic::getSpells)
+                .flatMap(Collection::stream)
+                .map(CharacterSpell::getId).toList()
             .containsAll(addCharacterRequest.getSpells().stream().toList()));
         assertNotNull(character.getAbilities());
         assertTrue(character.getAbilities().stream().map(CharacterAbility::getAbilityId).toList()
@@ -94,9 +100,15 @@ public class CharacterServiceTest {
     }
 
     @Test
-    @DisplayName("test generate character")
     public void testSuccessGenerateCharacter() {
-        characterService.generateCharacter();
+        var preGeneratedCharacter = characterService.generateCharacter();
+        assertNotNull(preGeneratedCharacter);
+        assertNotNull(preGeneratedCharacter.getName());
+        assertNotNull(preGeneratedCharacter.getAge());
+        assertNotNull(preGeneratedCharacter.getRaceId());
+        assertNotNull(preGeneratedCharacter.getGender());
+        assertNotNull(preGeneratedCharacter.getAbilities());
+        assertNotNull(preGeneratedCharacter.getTemper());
     }
 
     private CreateCharacterRequest createCharacterRequest() {

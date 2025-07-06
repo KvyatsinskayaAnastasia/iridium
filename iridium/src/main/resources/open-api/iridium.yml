@@ -34,3 +34,6 @@ paths:
     $ref: 'rest/user/register.yml'
   /authorization/user:
     $ref: 'rest/user/user.yml'
+
+  /attachment/upload:
+    $ref: 'rest/attachment/upload.yml'

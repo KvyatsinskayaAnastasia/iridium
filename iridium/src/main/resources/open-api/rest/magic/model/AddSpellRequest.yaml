@@ -13,7 +13,5 @@ properties:
     example: из рук мага вырывает сгусток огня из которого можно создавать огненные шары. Урон 5.
   level:
     type: integer
-    desctiprion: the magic level for the spell
-    maxValue: 5
-    minValue: 1
+    description: the magic level for the spell
     example: 1

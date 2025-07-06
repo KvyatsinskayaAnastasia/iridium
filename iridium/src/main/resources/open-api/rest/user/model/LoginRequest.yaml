@@ -1,5 +1,5 @@
 type: object
-requeired:
+required:
   - name
   - password
 properties:

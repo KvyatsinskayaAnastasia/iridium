@@ -9,7 +9,6 @@ import com.iridium.library.service.power.MagicService;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.CharacterSpell;
 import com.iridium.openapi.model.MagicResponse;
-import com.iridium.openapi.model.ShortMagicResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +38,7 @@ public class BaseMagicService implements MagicService {
     }
 
     @Override
-    public final List<ShortMagicResponse> getAllMagic() {
+    public final List<MagicResponse> getAllMagic() {
         return magicMapper.toMagicResponseList(magicRepository.findAll());
     }
 

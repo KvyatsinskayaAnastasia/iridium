@@ -5,7 +5,6 @@ import com.iridium.library.entity.power.SpellEO;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.CharacterSpell;
 import com.iridium.openapi.model.MagicResponse;
-import com.iridium.openapi.model.ShortMagicResponse;
 
 import java.util.List;
 import java.util.Set;
@@ -30,7 +29,7 @@ public interface MagicService {
      *
      * @return the list of magic responses
      */
-    List<ShortMagicResponse> getAllMagic();
+    List<MagicResponse> getAllMagic();
 
     /**
      * Get magic by id from db.

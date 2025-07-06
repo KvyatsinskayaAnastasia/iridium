@@ -1,9 +1,11 @@
 package com.iridium.library.service.character.impl;
 
 import com.iridium.library.entity.character.CharacterAbilityEO;
+import com.iridium.library.entity.character.CharacterEO;
 import com.iridium.library.entity.character.RaceEO;
 import com.iridium.library.entity.power.MagicEO;
 import com.iridium.library.mapper.character.CharacterMapper;
+import com.iridium.library.model.attachment.AttachmentType;
 import com.iridium.library.model.character.AgesStage;
 import com.iridium.library.model.character.CharacterLevel;
 import com.iridium.library.repository.character.CharacterAbilityRepository;
@@ -19,8 +21,9 @@ import com.iridium.openapi.model.CharacterMagic;
 import com.iridium.openapi.model.Character;
 import com.iridium.openapi.model.CreateCharacterRequest;
 import com.iridium.openapi.model.Gender;
+import com.iridium.openapi.model.MagicResponse;
 import com.iridium.openapi.model.PreGeneratedCharacter;
-import com.iridium.openapi.model.ShortMagicResponse;
+import com.iridium.openapi.model.ShortAbilityResponse;
 import com.iridium.security.service.user.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
@@ -28,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,19 +67,24 @@ public class BaseCharacterService implements CharacterService {
     private final AuthorizationService authorizationService;
 
     @Override
-    public final UUID saveCharacter(final CreateCharacterRequest character, final MultipartFile image) {
+    public final UUID saveCharacter(final CreateCharacterRequest character,
+                                    final MultipartFile image) throws IOException {
         final var newCharacter = characterMapper.toCharacterEO(character);
         newCharacter.setUserId(authorizationService.getCurrentUser().getId());
         newCharacter.setRace(raceService.getRaceById(character.getRaceId(), RaceEO.class));
         newCharacter.setSpells(magicService.getAllSpellsEntitiesByIds(character.getSpells()));
         if (image != null) {
-            newCharacter.setImage(attachmentService.saveAttachment(image));
+            newCharacter.setImage(attachmentService.saveAttachment(image,
+                    AttachmentType.CHARACTERS));
         }
         final var savedCharacter = characterRepository.save(newCharacter);
+        addAndSaveCharacterAbilities(character, savedCharacter);
+        return savedCharacter.getId();
+    }
 
+    private void addAndSaveCharacterAbilities(CreateCharacterRequest character, CharacterEO savedCharacter) {
         final var abilitiesMap = character.getAbilities().stream()
-            .collect(toMap(CharacterAbility::getAbilityId, Function.identity()));
-
+                .collect(toMap(CharacterAbility::getAbilityId, Function.identity()));
         final var abilityEOs = abilityService.getAllAbilityEntitiesByIds(abilitiesMap.keySet());
         final var characterAbilitiesEO = abilityEOs.stream().map(abilityEO -> {
             final CharacterAbilityEO characterAbilityEO = new CharacterAbilityEO();
@@ -85,8 +94,6 @@ public class BaseCharacterService implements CharacterService {
             return characterAbilityEO;
         }).collect(Collectors.toSet());
         characterAbilityRepository.saveAll(characterAbilitiesEO);
-
-        return savedCharacter.getId();
     }
 
     @Override
@@ -96,7 +103,8 @@ public class BaseCharacterService implements CharacterService {
 
     @Override
     public final Character getCharacterById(final UUID id) {
-        return characterMapper.toCharacter(characterRepository.findByIdWithSpellsAndAbilities(id).orElse(null));
+        return characterMapper.toCharacter(
+                characterRepository.findByIdWithSpellsAndAbilities(id).orElse(null));
     }
 
     @Override
@@ -115,7 +123,7 @@ public class BaseCharacterService implements CharacterService {
         preGeneratedCharacter.setName(generateName(preGeneratedCharacter.getGender()));
         preGeneratedCharacter.setTemper(generateTemper());
         final var characterLevel = AgesStage.CHILD == agesStage
-            ? CharacterLevel.SMALL : randomEnum(CharacterLevel.class);
+                ? CharacterLevel.SMALL : randomEnum(CharacterLevel.class);
         final var magicCount = RandomUtils.nextInt(0, characterLevel.getMaxFightSkillsCount());
         final var fightAbilityCount = characterLevel.getMaxFightSkillsCount() - magicCount;
         preGeneratedCharacter.setMagics(generateMagics(preGeneratedCharacter.getRaceId(), characterLevel, magicCount));
@@ -127,31 +135,29 @@ public class BaseCharacterService implements CharacterService {
         final Set<CharacterAbility> characterAbilities = new HashSet<>();
         final var abilities = abilityService.getAllAbilities();
         characterAbilities.addAll(abilities.stream()
-            .filter(ability -> AbilityType.BASIC == ability.getAbilityType())
-            .map(ability -> new CharacterAbility()
-                .abilityId(ability.getId())
-                .abilityName(ability.getName())
-                .abilityType(ability.getAbilityType())
-                .level(RandomUtils.nextInt(characterLevel.getMinAbilityLevel(), characterLevel.getMaxAbilityLevel())))
-            .collect(Collectors.toSet()));
+                .filter(ability -> AbilityType.BASIC == ability.getAbilityType())
+                .map(ability -> createCharacterAbility(characterLevel, ability))
+                .collect(Collectors.toSet()));
         characterAbilities.addAll(abilities.stream()
-            .filter(ability -> AbilityType.GENERAL == ability.getAbilityType() && RandomUtils.nextBoolean())
-            .map(ability -> new CharacterAbility()
-                .abilityId(ability.getId())
-                .abilityName(ability.getName())
-                .abilityType(ability.getAbilityType())
-                .level(RandomUtils.nextInt(characterLevel.getMinAbilityLevel(), characterLevel.getMaxAbilityLevel())))
-            .collect(Collectors.toSet()));
+                .filter(ability -> AbilityType.GENERAL == ability.getAbilityType()
+                        && RandomUtils.nextBoolean())
+                .map(ability -> createCharacterAbility(characterLevel, ability))
+                .collect(Collectors.toSet()));
         characterAbilities.addAll(randomFromList(abilities.stream()
-            .filter(ability -> AbilityType.FIGHTING == ability.getAbilityType())
-            .toList(), fightAbilityCount).stream()
-            .map(ability -> new CharacterAbility()
+                .filter(ability -> AbilityType.FIGHTING == ability.getAbilityType())
+                .toList(), fightAbilityCount).stream()
+                .map(ability -> createCharacterAbility(characterLevel, ability))
+                .collect(Collectors.toSet()));
+        return characterAbilities;
+    }
+
+    private static CharacterAbility createCharacterAbility(CharacterLevel characterLevel, ShortAbilityResponse ability) {
+        return new CharacterAbility()
                 .abilityId(ability.getId())
                 .abilityName(ability.getName())
                 .abilityType(ability.getAbilityType())
-                .level(RandomUtils.nextInt(characterLevel.getMinAbilityLevel(), characterLevel.getMaxAbilityLevel())))
-            .collect(Collectors.toSet()));
-        return characterAbilities;
+                .level(RandomUtils.nextInt(characterLevel.getMinAbilityLevel(),
+                        characterLevel.getMaxAbilityLevel()));
     }
 
     private Set<CharacterMagic> generateMagics(final UUID raceId, final CharacterLevel characterLevel,
@@ -159,9 +165,9 @@ public class BaseCharacterService implements CharacterService {
         final var race = raceService.getRaceById(raceId, RaceEO.class);
         final var unavailableMagic = race.getUnavailableMagic();
         final var magicIds = unavailableMagic != null
-            ? magicService.getAllMagicIdsNotIn(unavailableMagic.stream()
+                ? magicService.getAllMagicIdsNotIn(unavailableMagic.stream()
                 .map(MagicEO::getId).collect(Collectors.toSet()))
-            : magicService.getAllMagic().stream().map(ShortMagicResponse::getId).toList();
+                : magicService.getAllMagic().stream().map(MagicResponse::getId).toList();
         if (!CollectionUtils.isEmpty(magicIds)) {
             final var baseMagicId = generateBaseMagicId(race, magicIds);
             final Set<CharacterMagic> characterMagics = new HashSet<>();

@@ -36,7 +36,7 @@ public class SpellEO extends AbstractEntityEO {
     @Min(MIN_SPELL_LEVEL)
     private int level;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "magic_id")
     private MagicEO magic;
 }

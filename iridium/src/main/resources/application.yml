@@ -2,14 +2,16 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/iridium
     username: postgres
-    password: 123
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: validate
   flyway:
     enabled: true
     baselineOnMigrate: true
-
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 security:
   jwt:
     secret-key: 116e50262393df1679aa157ea553b57a2cf25ae8c9f919137a7cde370599be51
@@ -29,4 +31,4 @@ springdoc:
     configUrl: /v3/api-docs/swagger-config
 
 attachments:
-  directory: D:\IridiumProgect\backend\iridium\src\main\resources\attaches
+  directory: D:\IridiumProgect\backend\iridium\src\main\resources

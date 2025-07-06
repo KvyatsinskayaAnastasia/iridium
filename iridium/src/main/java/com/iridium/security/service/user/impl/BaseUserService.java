@@ -29,7 +29,7 @@ public class BaseUserService implements UserService {
     private final UserMapper userMapper;
 
     /**
-     * Load user details by user name.
+     * Load user details by username.
      *
      * @param username user name
      * @return user details

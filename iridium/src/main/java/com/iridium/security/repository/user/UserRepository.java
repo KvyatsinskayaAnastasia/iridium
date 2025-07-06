@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface UserRepository extends BaseRepository<UserEO, UUID> {
     /**
-     * Find user by user name.
+     * Find user by username.
      * @param username user name
      * @return user from db
      */

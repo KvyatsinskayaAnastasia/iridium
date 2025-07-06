@@ -35,9 +35,8 @@ public class SecurityConfiguration {
     private final UserRepository userRepository;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    private static final String[] AUTH_WHITELIST = {
-            "/authorization/**"
-    };
+    private static final String AUTHORIZATION_ENTRY = "/authorization/**";
+    private static final String ATTACHES_ENTRY = "/attaches/characters/**";
 
     /**
      * Set up security filter chain.
@@ -58,8 +57,9 @@ public class SecurityConfiguration {
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(AUTHORIZATION_ENTRY).permitAll()
+                        .requestMatchers(ATTACHES_ENTRY).permitAll()
+                        .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

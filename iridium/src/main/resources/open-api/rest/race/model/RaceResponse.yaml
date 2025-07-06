@@ -34,4 +34,4 @@ properties:
     items:
       $ref: 'RaceAbility.yaml'
     uniqueItems: true
-    description: special race bonuces for abilities level
+    description: special race bonuses for abilities level

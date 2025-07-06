@@ -5,9 +5,7 @@ required:
 properties:
   level:
     type: integer
-    desctiprion: the magic level for the spells
-    maxValue: 5
-    minValue: 1
+    description: the magic level for the spells
     example: 4
   spells:
     type: array

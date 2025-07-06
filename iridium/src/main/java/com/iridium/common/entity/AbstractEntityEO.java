@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Setter
 @Getter
 @MappedSuperclass
 public class AbstractEntityEO implements Serializable {
@@ -21,6 +22,5 @@ public class AbstractEntityEO implements Serializable {
         strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(updatable = false, nullable = false)
-    @Setter
     private UUID id;
 }

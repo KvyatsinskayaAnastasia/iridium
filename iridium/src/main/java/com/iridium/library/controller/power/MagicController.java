@@ -4,7 +4,6 @@ import com.iridium.library.service.power.impl.BaseMagicService;
 import com.iridium.openapi.api.MagicApi;
 import com.iridium.openapi.model.AddMagicRequest;
 import com.iridium.openapi.model.MagicResponse;
-import com.iridium.openapi.model.ShortMagicResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class MagicController implements MagicApi {
     }
 
     @Override
-    public final ResponseEntity<List<ShortMagicResponse>> getAllMagic() {
+    public final ResponseEntity<List<MagicResponse>> getAllMagic() {
         return ResponseEntity.ok(magicService.getAllMagic());
     }
 
